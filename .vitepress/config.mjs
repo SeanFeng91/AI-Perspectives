@@ -14,7 +14,10 @@ export default defineConfig({
       { text: '知识', link: '/KnowledgeSharing/index.md' },
       { text: '关于', link: '/About/index.md' }
     ],
-
+    outline: {
+      level: [1, 6], // 显示 h2 到 h4 的标题
+      label: '本页目录'
+    },
     sidebar: {
       '/ObservationAndThought/':[
         {
@@ -55,7 +58,8 @@ export default defineConfig({
           text: '关于本站',
           items: [
             { text: 'Markdown使用案例', link: '/About/markdown-examples' },
-            { text: 'Runtime API 使用案例', link: '/About/api-examples' }
+            { text: 'Runtime API 使用案例', link: '/About/api-examples' },
+            { text: '日志', link: '/About/log.md' }
           ]
         }
       ]

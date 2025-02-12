@@ -9,16 +9,16 @@ hero:
   actions:
     - theme: brand
       text: AI 趋势观察与思考
-      link: /markdown-examples
+      link: /ObservationAndThought/index.md
     - theme: alt
       text: AI 应用场景探索
-      link: /markdown-examples
+      link: /ApplicationExploration/index.md
     - theme: alt
       text: AI 产品评测与体验
-      link: /api-examples
+      link: /ProductExperiences/index.md
     - theme: alt
       text: AI 知识普及与分享
-      link: /api-examples
+      link: /KnowledgeSharing/index.md
 
 features:
   - title: AI 趋势观察与思考  (AI Trend Observation & Thought)

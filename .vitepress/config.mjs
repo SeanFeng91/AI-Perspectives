@@ -37,8 +37,7 @@ export default defineConfig({
         {
           text: 'AI 产品评测与体验',
           items: [
-            { text: 'Markdown Examples', link: '/markdown-examples' },
-            { text: 'Runtime API Examples', link: '/api-examples' }
+            { text: 'Ragflow一个非常容易上手的RAG产品', link: '/ProductExperiences/01_RagflowBlog.md' },
           ]
         }
       ],

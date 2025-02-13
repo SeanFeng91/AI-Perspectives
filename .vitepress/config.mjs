@@ -48,8 +48,11 @@ export default defineConfig({
         {
           text: 'AI 知识普及与分享',
           items: [
-            { text: 'Markdown Examples', link: '/markdown-examples' },
-            { text: 'Runtime API Examples', link: '/api-examples' }
+            { text: '文章收集', link: '/KnowledgeSharing/articleList.md' },
+            { text: '资讯收集', link: '/KnowledgeSharing/infoWeb.md' },
+            { text: '产品收集', link: '/KnowledgeSharing/productList.md' },
+            { text: '工具收集', link: '/KnowledgeSharing/toolsList.md' },
+            { text: '观点收集', link: '/KnowledgeSharing/opinionList.md' },
           ]
         }
       ],
@@ -57,8 +60,9 @@ export default defineConfig({
         {
           text: '关于本站',
           items: [
-            { text: 'Markdown使用案例', link: '/About/markdown-examples' },
-            { text: 'Runtime API 使用案例', link: '/About/api-examples' },
+            {text: '博客未来计划', link:'/About/todoList.md'},
+            { text: 'Docs:Markdown使用案例', link: '/About/markdown-examples' },
+            // { text: 'Runtime API 使用案例', link: '/About/api-examples' },
             { text: '日志', link: '/About/log.md' }
           ]
         }

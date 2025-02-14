@@ -9,4 +9,12 @@ compatibility_date = "2024-01-01"
 
 [vars]
 # 这些变量会在部署时被设置
-# GEMINI_API_KEY = "your-api-key" 
+# GEMINI_API_KEY = "your-api-key"
+DEBUG = false
+
+[env.development]
+vars = { DEBUG = true }
+
+# 环境变量说明
+# GEMINI_API_KEY - 在 Cloudflare Workers 的环境变量中设置
+# 格式：以 "AI" 开头的 API Key 

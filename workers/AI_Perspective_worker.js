@@ -11,20 +11,24 @@ async function handleGeminiChat(request, env) {
       throw new Error('无效的消息格式');
     }
 
-    const lastMessage = messages[messages.length - 1].content;
-    console.log('Processing message:', lastMessage);
+    // 构建对话历史
+    const contents = messages.map(msg => ({
+      role: msg.role === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.content }]
+    }));
 
+    console.log('Processing conversation history:', contents);
+
+    // 构建带有 API Key 的 URL
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${env.GEMINI_API_KEY}`;
+    
     const requestBody = {
-      contents: [{
-        parts: [{
-          text: lastMessage
-        }]
-      }],
+      contents,
       generationConfig: {
-        temperature: 0.7,
+        temperature: 0.3,
         topK: 40,
         topP: 0.95,
-        maxOutputTokens: 1024,
+        maxOutputTokens: 10000,
       },
       safetySettings: [
         {
@@ -38,20 +42,31 @@ async function handleGeminiChat(request, env) {
       ]
     };
 
-    console.log('Sending request to Gemini API with body:', JSON.stringify(requestBody));
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+
+    console.log('Sending request to Gemini API...');
     
-    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent', {
+    const response = await fetch(apiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${env.GEMINI_API_KEY}`
-      },
+      headers,
       body: JSON.stringify(requestBody)
     });
 
     console.log('Gemini API response status:', response.status);
     const data = await response.json();
-    console.log('Gemini API response data:', JSON.stringify(data));
+    
+    // 只在开发环境打印完整响应
+    if (env.DEBUG) {
+      console.log('Gemini API full response:', JSON.stringify(data));
+    } else {
+      console.log('Gemini API response structure:', {
+        status: response.status,
+        hasError: !!data.error,
+        hasCandidates: !!data.candidates
+      });
+    }
     
     if (!response.ok) {
       console.error('Gemini API error response:', data);
@@ -75,10 +90,19 @@ async function handleGeminiChat(request, env) {
       },
     });
   } catch (error) {
-    console.error('Error in handleGeminiChat:', error);
+    console.error('Error in handleGeminiChat:', {
+      message: error.message,
+      stack: error.stack
+    });
+    
+    let errorMessage = error.message;
+    if (errorMessage.includes('invalid authentication credentials')) {
+      errorMessage = 'API Key 无效或认证失败，请检查 API Key 设置';
+    }
+
     return new Response(JSON.stringify({ 
-      error: error.message,
-      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      error: errorMessage,
+      details: env.DEBUG ? error.stack : undefined
     }), {
       status: 500,
       headers: {

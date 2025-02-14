@@ -11,6 +11,8 @@
     "wrangler": "^3.28.2"
   },
   "dependencies": {
-    "@vueuse/core": "^12.5.0"
+    "@vueuse/core": "^12.5.0",
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.0"
   }
 }

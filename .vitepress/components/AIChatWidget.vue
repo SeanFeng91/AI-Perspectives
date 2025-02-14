@@ -16,7 +16,8 @@
         <div v-for="(message, index) in messages" 
              :key="index" 
              :class="['message', message.role]">
-          <div class="message-content">{{ message.content }}</div>
+          <div class="message-content markdown-body" v-if="message.role === 'assistant'" v-html="renderMarkdown(message.content)"></div>
+          <div class="message-content" v-else>{{ message.content }}</div>
         </div>
       </div>
 
@@ -26,6 +27,8 @@
           @keydown.enter.prevent="sendMessage"
           placeholder="输入您的问题..."
           rows="1"
+          ref="inputArea"
+          @input="adjustTextareaHeight"
         ></textarea>
         <button @click="sendMessage" :disabled="isLoading">
           {{ isLoading ? '发送中...' : '发送' }}
@@ -37,6 +40,28 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
+import MarkdownIt from 'markdown-it'
+import 'markdown-it/dist/markdown-it.min.js'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github-dark.css'
+
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true,
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(str, { language: lang }).value
+      } catch (__) {}
+    }
+    return '' // 使用默认的转义
+  }
+})
+
+const renderMarkdown = (content) => {
+  return md.render(content)
+}
 
 const isOpen = ref(false)
 const messages = ref([
@@ -45,6 +70,7 @@ const messages = ref([
 const userInput = ref('')
 const isLoading = ref(false)
 const messagesContainer = ref(null)
+const inputArea = ref(null)
 
 const isDev = import.meta.env.DEV
 const WORKER_URL = isDev 
@@ -53,6 +79,19 @@ const WORKER_URL = isDev
 
 const toggleChat = () => {
   isOpen.value = !isOpen.value
+  if (isOpen.value) {
+    nextTick(() => {
+      inputArea.value?.focus()
+    })
+  }
+}
+
+const adjustTextareaHeight = () => {
+  const textarea = inputArea.value
+  if (textarea) {
+    textarea.style.height = 'auto'
+    textarea.style.height = textarea.scrollHeight + 'px'
+  }
 }
 
 const scrollToBottom = async () => {
@@ -68,6 +107,7 @@ const sendMessage = async () => {
   const userMessage = userInput.value.trim()
   messages.value.push({ role: 'user', content: userMessage })
   userInput.value = ''
+  adjustTextareaHeight()
   await scrollToBottom()
 
   isLoading.value = true
@@ -153,8 +193,8 @@ const sendMessage = async () => {
   position: absolute;
   bottom: 70px;
   right: 0;
-  width: 350px;
-  height: 500px;
+  width: 380px;
+  height: 600px;
   background: var(--vp-c-bg);
   border: 1px solid var(--vp-c-divider);
   border-radius: 10px;
@@ -189,23 +229,28 @@ const sendMessage = async () => {
   flex: 1;
   overflow-y: auto;
   padding: 15px;
+  scroll-behavior: smooth;
 }
 
 .message {
-  margin-bottom: 10px;
-  max-width: 80%;
+  margin-bottom: 20px;
+  max-width: 85%;
+  display: flex;
+  flex-direction: column;
 }
 
 .message.user {
   margin-left: auto;
+  align-items: flex-end;
 }
 
 .message-content {
-  padding: 8px 12px;
+  padding: 12px 16px;
   border-radius: 15px;
   background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-1);
-  display: inline-block;
+  line-height: 1.5;
+  overflow-wrap: break-word;
 }
 
 .message.user .message-content {
@@ -213,34 +258,84 @@ const sendMessage = async () => {
   color: white;
 }
 
+.message-content.markdown-body {
+  padding: 12px 16px;
+  background: var(--vp-c-bg-soft);
+  border-radius: 15px;
+}
+
+.message-content.markdown-body :deep(pre) {
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 6px;
+  background: var(--vp-c-bg-alt) !important;
+}
+
+.message-content.markdown-body :deep(code) {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9em;
+  background: var(--vp-c-bg-alt);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.message-content.markdown-body :deep(p) {
+  margin: 8px 0;
+}
+
+.message-content.markdown-body :deep(ul),
+.message-content.markdown-body :deep(ol) {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
 .chat-input {
   padding: 15px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--vp-c-divider);
   display: flex;
   gap: 10px;
+  align-items: flex-start;
 }
 
 .chat-input textarea {
   flex: 1;
-  padding: 8px;
+  padding: 8px 12px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 4px;
+  border-radius: 8px;
   resize: none;
   background: var(--vp-c-bg);
   color: var(--vp-c-text-1);
+  font-size: 14px;
+  line-height: 1.5;
+  max-height: 150px;
+  min-height: 36px;
 }
 
 .chat-input button {
-  padding: 8px 15px;
+  padding: 8px 16px;
   background: var(--vp-c-brand);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 14px;
+  height: 36px;
+  white-space: nowrap;
 }
 
 .chat-input button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .chat-window {
+    width: calc(100vw - 40px);
+    height: calc(100vh - 100px);
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    bottom: 80px;
+  }
 }
 </style> 

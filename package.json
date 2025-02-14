@@ -2,9 +2,15 @@
   "scripts": {
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:preview": "vitepress preview",
+    "worker:dev": "wrangler dev workers/AI_Perspective_worker.js",
+    "worker:deploy": "wrangler deploy"
   },
   "devDependencies": {
-    "vitepress": "^1.6.3"
+    "vitepress": "^1.6.3",
+    "wrangler": "^3.28.2"
+  },
+  "dependencies": {
+    "@vueuse/core": "^12.5.0"
   }
 }

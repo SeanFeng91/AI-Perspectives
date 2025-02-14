@@ -7,3 +7,4 @@
     
     文章中提到了给60000张图片用gemini-1.5模型进行一句话描述，预计费用仅为1美元。可以自己尝试并且做一个不同模型的对比测试。
 
+2. [阮一峰的网络网络日志](https://www.ruanyifeng.com/blog/):记录每周值得分享的科技内容，周五发布。有博主基于Vitepress修改了一个相对清爽的[版本](https://ruanyf-weekly.plantree.me/weekly/issue-332)。@2025-02-13

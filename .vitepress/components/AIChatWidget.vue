@@ -72,6 +72,7 @@ const sendMessage = async () => {
 
   isLoading.value = true
   try {
+    console.log('Sending message to worker:', userMessage);
     const response = await fetch(`${WORKER_URL}/api/chat`, {
       method: 'POST',
       headers: {
@@ -82,18 +83,34 @@ const sendMessage = async () => {
       })
     })
 
+    console.log('Worker response status:', response.status);
     const data = await response.json()
+    console.log('Worker response data:', data);
+    
+    if (!response.ok) {
+      console.error('Worker error:', data);
+      throw new Error(`HTTP error! status: ${response.status}, message: ${data.error || '未知错误'}`)
+    }
+    
     if (data.error) {
+      console.error('API error:', data.error);
       throw new Error(data.error)
     }
 
+    if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
+      console.error('Invalid response format:', data);
+      throw new Error('API 返回了无效的响应格式')
+    }
+
     const assistantMessage = data.candidates[0].content.parts[0].text
+    console.log('Received assistant message:', assistantMessage);
     messages.value.push({ role: 'assistant', content: assistantMessage })
     await scrollToBottom()
   } catch (error) {
+    console.error('Chat error:', error);
     messages.value.push({
       role: 'assistant',
-      content: '抱歉，发生了一些错误。请稍后再试。'
+      content: `抱歉，发生了错误：${error.message}`
     })
   } finally {
     isLoading.value = false

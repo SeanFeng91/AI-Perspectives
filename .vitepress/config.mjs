@@ -34,6 +34,7 @@ export default defineConfig({
           items: [
             { text: '用AI生成一档自己的播客节目', link: '/ApplicationExploration/01_AIBoke.md' },
             { text: '我是如何通过AI辅助我研究《实验室设计》课题的', link: '/ApplicationExploration/02_HowAIAsisResearch.md' },
+            { text: '在VitePress中集成AI聊天助手', link: '/ApplicationExploration/03_AddAIChatWidget.md' },
           ]
         }
       ],

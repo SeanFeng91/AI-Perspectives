@@ -1,6 +1,18 @@
+---
+title: 手把手教你用cursor给博客加个AI助手
+
+---
 # 手把手教你用cursor给博客加个AI助手：VitePress + Cloudflare Workers + Gemini实战
 
-> 🤔 你是否想过，在浏览博客时能随时和AI聊两句？今天就教你如何通过与cursor对话，在VitePress博客上加个智能助手，让读者能随时和AI对话~
+<div style="display: flex; align-items: center; margin-top: 10px; color: var(--vp-c-text-2); font-size: 0.9em; border-bottom: 1px solid var(--vp-c-divider); padding-bottom: 20px;">
+  <ReadingTime />
+  <span style="margin-left: 10px; margin-right: 10px;">|</span>
+  <span>日期: 2025-02-14</span>
+</div>
+
+
+> 🤔 你是否想过，在浏览博客时能随时和AI聊两句？
+> 今天我们就来尝试如何通过与cursor对话，在VitePress博客上加个智能助手，让读者能随时和AI对话~
 
 ## 🌟 开发灵感
 Cursor 是一款强大的代码编辑器，它内置了基于 AI 的聊天和代码生成功能。其中:
@@ -379,7 +391,7 @@ const applyTheme = (theme) => {
 - 用户体验优化
 
 
-经过一番探索与实践，我们成功地为博客添加了一个超酷的AI助手功能！这不仅仅是让博客变得“更智能”了一点点，简直是赋予了它全新的灵魂！回顾整个开发过程，从Vue组件的精巧设计，到Serverless服务的轻盈部署，再到与API的巧妙对接，每一步都充满了挑战，也充满了收获。我们借助AI编程的能力掌握并实践了一点点前端组件开发的技巧，还深入体验了Serverless架构的便捷与高效，更重要的是，亲手打通了与前沿AI技术的桥梁，让博客的用户体验焕然一新。
+经过一番探索与实践，我们成功地为博客添加了一个超酷的AI助手功能！这不仅仅是让博客变得"更智能"了一点点，简直是赋予了它全新的灵魂！回顾整个开发过程，从Vue组件的精巧设计，到Serverless服务的轻盈部署，再到与API的巧妙对接，每一步都充满了挑战，也充满了收获。我们借助AI编程的能力掌握并实践了一点点前端组件开发的技巧，还深入体验了Serverless架构的便捷与高效，更重要的是，亲手打通了与前沿AI技术的桥梁，让博客的用户体验焕然一新。
 > 小贴士：记得保护好你的API密钥哦，千万别直接写在代码里！😉
 
 ## 🔗 参考资源

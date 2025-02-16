@@ -1,9 +1,12 @@
 import { defineConfig } from 'vitepress'
+import readingTime from 'vuepress-plugin-reading-time'
+
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "AI Perspectives",
   description: "从多元的角度观察这个充满",
+  
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -32,9 +35,9 @@ export default defineConfig({
         {
           text: 'AI 应用场景探索',
           items: [
-            { text: '用AI生成一档自己的播客节目', link: '/ApplicationExploration/01_AIBoke.md' },
-            { text: '我是如何通过AI辅助我研究《实验室设计》课题的', link: '/ApplicationExploration/02_HowAIAsisResearch.md' },
-            { text: '在VitePress中集成AI聊天助手', link: '/ApplicationExploration/03_AddAIChatWidget.md' },
+            // { text: '用AI生成一档自己的播客节目', link: '/ApplicationExploration/01_AIBoke.md' },
+            // { text: '我是如何通过AI辅助我研究《实验室设计》课题的', link: '/ApplicationExploration/02_HowAIAsisResearch.md' },
+            { text: '1. 在VitePress中集成AI聊天助手', link: '/ApplicationExploration/03_AddAIChatWidget.md' },
           ]
         }
       ],
@@ -87,6 +90,19 @@ export default defineConfig({
       compilerOptions: {
         isCustomElement: (tag) => tag.includes('vue3-')
       }
+    }
+  },
+
+  markdown: {
+    config: (md) => {
+      md.use(readingTime, {
+        // 中文文本计数设置
+        wordsPerMinute: 300,
+        // 确保计数包含中文字符
+        wordPattern: /[\w\u4e00-\u9fa5]+/g,
+        // 是否输出调试信息
+        debug: true
+      })
     }
   }
 })

@@ -1,43 +1,43 @@
 {
-  "hash": "639c7541",
+  "hash": "382cc343",
   "configHash": "4167d768",
-  "lockfileHash": "16bc62f5",
-  "browserHash": "5370fbb0",
+  "lockfileHash": "be708de9",
+  "browserHash": "2ebd4879",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "660f6d28",
+      "fileHash": "1fa7c955",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "88bccf86",
+      "fileHash": "7153dc32",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "aca191e5",
+      "fileHash": "9444b7ee",
       "needsInterop": false
     },
     "markdown-it": {
       "src": "../../../node_modules/markdown-it/index.mjs",
       "file": "markdown-it.js",
-      "fileHash": "55487f2f",
+      "fileHash": "40f5fdb0",
       "needsInterop": false
     },
     "markdown-it/dist/markdown-it.min.js": {
       "src": "../../../node_modules/markdown-it/dist/markdown-it.min.js",
       "file": "markdown-it_dist_markdown-it__min__js.js",
-      "fileHash": "95c63f04",
+      "fileHash": "0a19b249",
       "needsInterop": true
     },
     "highlight.js": {
       "src": "../../../node_modules/highlight.js/es/index.js",
       "file": "highlight__js.js",
-      "fileHash": "8b5c2fe0",
+      "fileHash": "7fd93496",
       "needsInterop": false
     }
   },

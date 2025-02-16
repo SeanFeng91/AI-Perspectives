@@ -13,6 +13,7 @@
   "dependencies": {
     "@vueuse/core": "^12.5.0",
     "highlight.js": "^11.11.1",
-    "markdown-it": "^14.1.0"
+    "markdown-it": "^14.1.0",
+    "vuepress-plugin-reading-time": "^0.1.1"
   }
 }

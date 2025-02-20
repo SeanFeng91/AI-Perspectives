@@ -67,10 +67,9 @@
 
 https://www.icloud.com/shortcuts/c524f278cb574dd4a13619af0d58b1da ，该快捷指令实现了最基本的单次对话功能。
 
-https://www.icloud.com/shortcuts/1c25a89d7ebf494883398d600ccfa9b9，该快捷指令考虑了提示词，循环对话等，有一定的进阶。
+https://www.icloud.com/shortcuts/1c25a89d7ebf494883398d600ccfa9b9 ，该快捷指令考虑了提示词，循环对话等，有一定的进阶。
 
-假设你的快捷指令名称是“小聪明”，那你只需要“Hi, Siri, 小聪明”，就可以启动这个快捷指令，然后开始语音输入你的问题。
-
+下载后你可以将deepseek的指令名称修改成你喜欢的。假设你的快捷指令名称是“小聪明”，那你只需要“Hi, Siri, 小聪明”，就可以启动这个快捷指令，然后开始语音输入你的问题。
 
 除了开箱使用，这里简单的说明一下这个快捷指令的实现原理。之前有通过api接入过大模型的小伙伴肯定对这个很熟悉：
 
@@ -94,7 +93,6 @@ curl -X POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions 
 
 根据获取api的平台不同，你只需要将URL换成你的平台，比如硅基流动的：https://api.siliconflow.cn/v1/chat/completions， 把API换成硅基流动的API，把模型的名称换成对应的模型名称即可。
 ![image.png](https://cloudflare-imgbed-1d8.pages.dev/file/1740019780182_image.png)
-
 
 
 当然你也可以试试通过调整模型的温度等参数，来实现更加个性化的对话。

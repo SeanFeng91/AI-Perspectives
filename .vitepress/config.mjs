@@ -11,6 +11,9 @@ export default withMermaid(
     
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
+      search: {
+        provider: 'local'
+      },
       nav: [
         { text: '主页', link: '/' },
         { text: '观察', link: '/ObservationAndThought/index.md' },

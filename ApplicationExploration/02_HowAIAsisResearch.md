@@ -28,12 +28,20 @@
 
   * **目的:**  快速生成潜在的研究方向和主题，评估选题的新颖性和可行性，缩小选题范围。
   * **工具:**
-      * **AI 选题生成器 (AI Topic Generators):**
-          * **工具示例:**  可以使用在线的AI论文选题生成器，例如 **Simplified AI Content Generator** ([https://simplified.com/zh-cn/ai-content-generator/thesis-statement-generator/](https://www.google.com/search?q=https://simplified.com/zh-cn/ai-content-generator/thesis-statement-generator/))，**Scalenut AI Thesis Statement Generator** ([https://www.scalenut.com/tools/thesis-statement-generator/](https://www.google.com/search?q=https://www.scalenut.com/tools/thesis-statement-generator/)) 等。
-          * **使用方法:**  输入你的研究领域、关键词或初步想法，AI工具会生成一系列相关的论文选题。
-          * **目的:**  激发灵感，快速获取多个潜在选题方向。
+    在这个选题的环节，建议使用联网类对话AI（Gemini、DeepSeek、ChatGPT等），或者是联接科研数据库的AI工具（如CNKI AI助手）等，通过输入我的研究领域、关键词或初步想法，AI工具会生成一系列相关的论文选题，激发灵感，快速获取多个潜在选题方向。这个环节更重要的是提示词。以下是一些可能的参考：
+    
+    **提示词参考**
+    * "请分析【领域A】与【领域B】的结合点，推荐3个具有创新价值的选题方向，说明其理论/应用价值"
+    * "列出2021-2025年【专业】领域被引量前10的论文关键词，用表格展示研究热点趋势"
+    * "基于【研究方向】，推荐5个结合技术应用与伦理挑战的创新选题，需包含研究意义与突破方向"
+    * "生成【专业】领域内兼具理论价值和实践应用的选题，需满足：①聚焦2025政策热点 ②采用【技术】方法 ③解决【行业】痛点"
+
+    ![image.png](https://cloudflare-imgbed-1d8.pages.dev/file/1740626864600_image.png)
+
       * **研究趋势分析工具 (Research Trend Analysis Tools):**
-          * **工具示例:**  **Connected Papers** ([https://www.connectedpapers.com/](https://www.google.com/url?sa=E&source=gmail&q=https://www.connectedpapers.com/))，**Research Rabbit** ([https://www.researchrabbit.ai/](https://www.google.com/url?sa=E&source=gmail&q=https://www.researchrabbit.ai/))。
+          * **工具示例:**  
+          **Connected Papers** ([https://www.connectedpapers.com/](https://www.google.com/url?sa=E&source=gmail&q=https://www.connectedpapers.com/))，**Research Rabbit** ([https://www.researchrabbit.ai/](https://www.google.com/url?sa=E&source=gmail&q=https://www.researchrabbit.ai/))。
+
           * **使用方法:**  输入一篇核心论文或关键词，工具会可视化展示相关研究领域的热点、趋势和重要文献，帮助你了解研究前沿和潜在的研究空白。
           * **目的:**  把握研究领域趋势，识别潜在的研究机会和创新点。
       * **文献数据库关键词分析 (Keyword Analysis in Literature Databases):**
@@ -41,10 +49,6 @@
           * **使用方法:**  在文献数据库中搜索关键词，利用数据库的分析功能（如关键词共现分析、趋势分析），了解该领域的研究热点和发展趋势。
           * **目的:**  从宏观层面了解研究领域的整体情况，发现值得深入研究的方向。
 
-
-          
-
-      * **常用的论文写作提示词**
 
 #### 2\. 文献综述 (Literature Review)
 
@@ -54,14 +58,69 @@
           * **工具示例:**  **Elicit** ([https://elicit.com/](https://www.google.com/url?sa=E&source=gmail&q=https://elicit.com/))，**Scite** ([https://scite.ai/](https://www.google.com/url?sa=E&source=gmail&q=https://scite.ai/))。
           * **使用方法:**  使用自然语言提问，AI工具可以帮助你更精准地检索文献，并提供文献摘要、关键信息提取等功能。
           * **目的:**  提高文献检索效率和精准度，快速获取所需文献。
+
+          Elicit是一款专注于文献综述自动化的AI研究助手，主要功能包括：
+          智能文献搜索：通过自然语言提问（如“How does IoT data affect machine learning models?”）检索超1.25亿篇论文，返回相关文献列表并生成摘要。数据提取与总结：自动从PDF中提取研究方法、结论等关键信息，整理为表格或综述段落。主题发现：跨论文识别共同主题（如“药物效果”），生成可视化引用网络。
+          
+          使用方法：注册账户后输入研究问题→筛选结果（按年份、期刊质量等）→上传PDF提取数据→导出CSV/BibTeX格式。
+          
+          Scite则聚焦引文可靠性分析，核心功能为：
+          
+          引文分类：自动将引用标记为“支持”“反对”或“提及”，并展示上下文。可视化网络：图形化呈现文献引用关系，支持交互式探索。文稿检查：上传PDF自动识别引用文献的可靠性，标注撤稿或争议内容。
+          
+          使用方法：搜索文献查看被引详情→创建Dashboard追踪特定作者/期刊→设置提醒获取新引用动态→通过浏览器插件实时查看引文评价。
+          
+          * Elicit侧重文献获取与综述自动化，适合快速构建研究框架；Scite强调引文质量验证，帮助避免引用争议性结论。
+
+
+
+
+
       * **AI 文献总结工具 (AI Literature Summarization Tools):**
-          * **工具示例:**  **Scholarcy** ([https://www.scholarcy.com/](https://www.google.com/url?sa=E&source=gmail&q=https://www.scholarcy.com/))，**Litmaps** ([https://litmaps.co/](https://www.google.com/url?sa=E&source=gmail&q=https://litmaps.co/))，**Research Rabbit** ([https://www.researchrabbit.ai/](https://www.google.com/url?sa=E&source=gmail&q=https://www.researchrabbit.ai/)) (部分功能)。
+
+          **Scholarcy** ([https://www.scholarcy.com/](https://www.google.com/url?sa=E&source=gmail&q=https://www.scholarcy.com/))
+          
+          * [**Litmaps**](https://litmaps.co/) 一款基于文献引用关系构建可视化网络的科研工具，能够帮助用户快速定位领域核心文献并理清研究脉络。以下是其主要功能与特点：
+
+        > 1.**种子文献驱动**：输入DOI、关键词或作者即可生成以"种子论文"为中心的引用网络，通过连接线展示文献间的引用关系（灰色圆圈大小表示被引量，默认布局中高被引文献位于顶部，新文献位于右侧）。
+        > 2.**动态可视化探索**：支持拖动节点重组网络布局，可创建不同颜色的文献分组辅助分析。通过"Discover"功能扩展网络边界，揭示种子文献所在研究领域的全局关联。
+            提供时间轴视图追踪研究趋势，识别开创性论文与新兴热点。
+       
+          
+          * [**Research Rabbit**](https://www.researchrabbit.ai/) 一款AI驱动的科研工具，核心功能包括：
+          
+          > 1. 智能文献推荐，通过分析用户输入的文献、关键词或导入文档（如BibTeX/RIS格式），推荐相关论文及早期/后期研究；
+          > 2. 可视化知识图谱，以网络图和时间轴展示文献引用关系、作者合作网络及研究趋势；
+          > 3. 协作与文献管理，支持创建文献集合、添加注释、团队共享，并与Zotero等引用管理工具无缝集成；
+          > 4. 个性化追踪，通过非垃圾邮件提醒推送最新研究成果。其交互式界面特别适合快速构建领域知识框架和撰写文献综述。
+
+        ![image.png](https://cloudflare-imgbed-1d8.pages.dev/file/1740626295307_image.png)
+
+
           * **使用方法:**  上传文献PDF或粘贴文本，AI工具可以自动生成文献摘要、提取关键信息、识别研究方法和结论等。
           * **目的:**  快速了解文献内容，节省阅读时间，高效整理文献信息。
-      * **文献管理工具 (Citation Management Tools) 结合 AI 功能:**
-          * **工具示例:**  **Zotero**, **Mendeley**, **EndNote** 等，部分工具已集成AI功能，如智能文献推荐、信息提取等。
-          * **使用方法:**  使用文献管理工具整理和管理文献，结合其AI功能，可以更高效地组织文献综述，并自动生成参考文献列表。
-          * **目的:**  系统化管理文献，方便后续引用和论文写作，提高文献综述的组织性和规范性。
+
+      * **文献管理工具 (Citation Management Tools)**
+          
+          使用文献管理工具整理和管理文献，结合其AI功能，可以更高效地组织文献综述，并自动生成参考文献列表。系统化管理文献，方便后续引用和论文写作，提高文献综述的组织性和规范性。
+          
+        * [**Zotero**](https://www.zotero.org/) 是一款免费开源的文献管理工具，支持文献收集、整理、引用和协作。核心功能包括：
+          > 1. 通过浏览器插件一键抓取网页文献（如Google Scholar、知网），自动提取标题、作者等元数据；
+          > 2. 分类管理文献，支持文件夹嵌套、多色标签及智能搜索（如“机器学习 tag:重要”）；
+          > 3. 与Word/WPS深度集成，可自动生成APA/MLA/国标等9000+格式的参考文献；
+          > 4. 跨平台同步（含手机端）及团队协作共享文献库。
+          
+          **使用步骤**：①官网下载客户端并安装浏览器插件；②注册账号开启云端同步；③创建分类文件夹并导入文献（支持BibTeX/PDF/网页抓取）；④在写作时通过插件插入引用并生成参考文献表。进阶用户可通过插件市场扩展翻译、影响因子查询等功能。
+
+          ![image.png](https://cloudflare-imgbed-1d8.pages.dev/file/1740627255427_image.png)
+
+        * [**ima**](https://ima.qq.com/) ima是一款由腾讯开发的AI智能工作台，具备信息获取与问答、多模态内容解读、个性化知识管理及写作辅助等功能。
+        > 用户可通过输入关键词或上传文件，在ima首页进行AI问答，或利用侧边栏对阅读内容进行实时解读与答疑。ima支持多种文件格式上传与整理，并提供智能写作、图片生成等AI辅助功能。其优势在于智能化程度高，能基于全网信源或个人知识库进行精准搜索与推荐，同时支持跨平台使用与团队协作共享知识库，为用户提供高效、便捷且个性化的知识管理服务。
+
+        ![image.png](https://cloudflare-imgbed-1d8.pages.dev/file/1740628418935_image.png)
+
+        * 详细的一些功能介绍可以参考卡兹的这篇推文[安利一个我目前觉得最好用的AI知识库 - 腾讯ima](https://mp.weixin.qq.com/s/_H1HFSSvuAnm-4oocuRbCQ)
+
 
 #### 3\. 深化选题 (Deepening Topic)
 

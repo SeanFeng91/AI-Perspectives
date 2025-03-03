@@ -17,3 +17,7 @@
 经典书籍推荐：你是否苦于教材的晦涩难懂不知所云？别从自己身上找原因了，可能只是教材写得太烂。看过 CSAPP 这本书的同学一定会感叹好书的重要，我将列举推荐各个计算机领域的必看好书与资源链接。
 
 国内外高质量 CS 课程汇总：将把我上过的以及开源社区贡献的高质量的国内外 CS 课程分门别类进行汇总，介绍其课程内容特点并给出相应的自学建议，大部分课程都会有一个独立的仓库维护相关的资源以及作业实现供大家学习参考。
+
+4. [AI知识库](https://waytoagi.feishu.cn/wiki/NbqXwHXrkiYWKVkFTbmcwxQqntb?contentTheme=DARK&theme=LIGHT) 结合飞书详细的整理了AI学习相关的知识。
+
+![image.png](https://cloudflare-imgbed-1d8.pages.dev/file/1740647377266_image.png)

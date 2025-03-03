@@ -53,7 +53,8 @@ export default withMermaid(
           {
             text: 'AI 产品评测与体验',
             items: [
-              { text: 'Ragflow一个非常容易上手的RAG产品', link: '/ProductExperiences/01_RagflowBlog.md' },
+              { text: '1. Ragflow一个非常容易上手的RAG产品', link: '/ProductExperiences/01_RagflowBlog.md' },
+              { text: '2. Cursor 使用秘籍', link: '/ProductExperiences/02_CursorExperience.md' },
             ]
           }
         ],

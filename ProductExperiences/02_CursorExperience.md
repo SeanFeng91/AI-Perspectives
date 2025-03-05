@@ -73,3 +73,19 @@ The new cmd instance remains empty and appears to close immediately (or waits in
 ::: details
 ![image.png](https://cloudflare-imgbed-1d8.pages.dev/file/1740980764008_image.png)
 :::
+
+
+## 本地新项目to Github
+
+```
+git init
+git add .
+git commit -m "初始化项目"
+```
+在GitHub上创建新仓库【name】，不要新增readme文件
+
+```
+git remote add origin https://github.com/your-username/【name】.git
+git branch -M main
+git push -u origin main
+```

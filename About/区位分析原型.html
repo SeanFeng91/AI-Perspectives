@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>城市生活圈 - 便捷生活评价工具</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .map-container {
+            height: 500px;
+            background-color: #f0f0f0;
+            background-image: url('https://api.mapbox.com/styles/v1/mapbox/light-v10/static/121.4737,31.2304,12,0/800x500?access_token=pk.placeholder');
+            background-size: cover;
+            background-position: center;
+        }
+        .time-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+        .time-circle-5min {
+            width: 200px;
+            height: 200px;
+            background-color: rgba(52, 211, 153, 0.4);
+        }
+        .time-circle-10min {
+            width: 400px;
+            height: 400px;
+            background-color: rgba(96, 165, 250, 0.3);
+        }
+        .marker {
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-map-marked-alt text-emerald-500 text-2xl"></i>
+                <span class="font-bold text-xl text-emerald-600">城市生活圈</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="text-emerald-600 font-medium" onclick="switchTab('home')">首页</a>
+                <a href="#" class="text-gray-600 hover:text-emerald-500" onclick="switchTab('analysis')">生活圈分析</a>
+                <a href="#" class="text-gray-600 hover:text-emerald-500" onclick="switchTab('compare')">区域对比</a>
+                <a href="#" class="text-gray-600 hover:text-emerald-500" onclick="switchTab('report')">评估报告</a>
+                <a href="#" class="text-gray-600 hover:text-emerald-500" onclick="switchTab('data')">数据中心</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-md transition">登录</button>
+                <button class="text-emerald-500 border border-emerald-500 px-4 py-2 rounded-md hover:bg-emerald-50 transition">注册</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- 首页 -->
+        <div id="home" class="tab-content active">
+            <div class="bg-gradient-to-r from-emerald-500 to-blue-500 rounded-xl p-8 text-white mb-8">
+                <h1 class="text-3xl font-bold mb-4">探索您周边的生活便利度</h1>
+                <p class="text-xl mb-6">基于五分钟、十分钟生活圈理念，全方位评估居住环境</p>
+                <div class="bg-white rounded-lg p-4 shadow-lg">
+                    <div class="flex flex-col md:flex-row">
+                        <input type="text" placeholder="输入地址、小区名或地标" class="flex-grow px-4 py-3 rounded-l-md focus:outline-none text-gray-700">
+                        <button class="bg-emerald-500 text-white px-6 py-3 rounded-r-md hover:bg-emerald-600 transition mt-2 md:mt-0">
+                            开始分析
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="text-emerald-500 text-4xl mb-4">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">生活圈分析</h3>
+                    <p class="text-gray-600 mb-4">分析5分钟、10分钟步行可达范围内的各类设施</p>
+                    <button class="text-emerald-500 font-medium" onclick="switchTab('analysis')">
+                        开始分析 <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="text-blue-500 text-4xl mb-4">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">区域对比</h3>
+                    <p class="text-gray-600 mb-4">对比不同区域的生活便利度，辅助居住决策</p>
+                    <button class="text-blue-500 font-medium" onclick="switchTab('compare')">
+                        开始对比 <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="text-purple-500 text-4xl mb-4">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">专业报告</h3>
+                    <p class="text-gray-600 mb-4">生成详细的区域评估报告，包含多维度分析</p>
+                    <button class="text-purple-500 font-medium" onclick="switchTab('report')">
+                        生成报告 <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <h2 class="text-2xl font-bold mb-4">热门分析区域</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="border rounded-lg overflow-hidden hover:shadow-md transition">
+                        <img src="https://via.placeholder.com/300x200" alt="区域图片" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-semibold">徐家汇商圈</h3>
+                            <div class="flex items-center mt-2">
+                                <div class="text-yellow-400 text-sm">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm ml-2">4.5分</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border rounded-lg overflow-hidden hover:shadow-md transition">
+                        <img src="https://via.placeholder.com/300x200" alt="区域图片" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-semibold">静安寺周边</h3>
+                            <div class="flex items-center mt-2">
+                                <div class="text-yellow-400 text-sm">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm ml-2">4.0分</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border rounded-lg overflow-hidden hover:shadow-md transition">
+                        <img src="https://via.placeholder.com/300x200" alt="区域图片" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-semibold">陆家嘴金融区</h3>
+                            <div class="flex items-center mt-2">
+                                <div class="text-yellow-400 text-sm">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm ml-2">4.8分</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border rounded-lg overflow-hidden hover:shadow-md transition">
+                        <img src="https://via.placeholder.com/300x200" alt="区域图片" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-semibold">五角场大学城</h3>
+                            <div class="flex items-center mt-2">
+                                <div class="text-yellow-400 text-sm">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm ml-2">3.5分</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 生活圈分析页面 -->
+        <div id="analysis" class="tab-content">
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4">生活圈分析</h2>
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="flex-grow">
+                        <input type="text" placeholder="输入地址、小区名或地标" class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div class="flex space-x-2">
+                        <select class="px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option>上海市</option>
+                            <option>北京市</option>
+                            <option>广州市</option>
+                            <option>深圳市</option>
+                        </select>
+                        <button class="bg-emerald-500 text-white px-6 py-3 rounded-md hover:bg-emerald-600 transition">
+                            分析
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="md:col-span-3">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="p-4 border-b">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-semibold">上海市徐汇区徐家汇</h3>
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded-md text-sm">5分钟</button>
+                                    <button class="px-3 py-1 bg-gray-100 text-gray-600 rounded-md text-sm">10分钟</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative map-container">
+                            <!-- 地图将在这里显示 -->
+                            <div class="time-circle time-circle-5min" style="top: 250px; left: 400px;"></div>
+                            <div class="time-circle time-circle-10min" style="top: 250px; left: 400px;"></div>
+                            <div class="marker" style="top: 250px; left: 400px;">
+                                <i class="fas fa-map-marker-alt text-red-500 text-3xl"></i>
+                            </div>
+                            <!-- POI标记 -->
+                            <div class="marker" style="top: 200px; left: 350px;">
+                                <i class="fas fa-shopping-cart text-blue-500"></i>
+                            </div>
+                            <div class="marker" style="top: 280px; left: 450px;">
+                                <i class="fas fa-hospital text-red-500"></i>
+                            </div>
+                            <div class="marker" style="top: 220px; left: 420px;">
+                                <i class="fas fa-subway text-purple-500"></i>
+                            </div>
+                            <div class="marker" style="top: 300px; left: 380px;">
+                                <i class="fas fa-utensils text-orange-500"></i>
+                            </div>
+                        </div>
+                        <div class="p-4 flex space-x-4">
+                            <button class="flex items-center text-gray-600">
+                                <i class="fas fa-share-alt mr-1"></i> 分享
+                            </button>
+                            <button class="flex items-center text-gray-600">
+                                <i class="fas fa-download mr-1"></i> 下载
+                            </button>
+                            <button class="flex items-center text-gray-600">
+                                <i class="fas fa-print mr-1"></i> 打印
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-1 space-y-6">
+                    <div class="bg-white rounded-xl shadow-md p-4">
+                        <h3 class="font-semibold text-lg mb-3">综合评分</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-3xl font-bold text-emerald-500">4.6</div>
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>购物便利</span>
+                                    <span class="font-medium">4.8</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: 96%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>医疗资源</span>
+                                    <span class="font-medium">4.5</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>教育设施</span>
+                                    <span class="font-medium">4.2</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: 84%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>交通便利</span>
+                                    <span class="font-medium">4.9</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: 98%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>休闲娱乐</span>
+                                    <span class="font-medium">4.6</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-md p-4">
+                        <h3 class="font-semibold text-lg mb-3">设施统计</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-2">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <span>购物场所</span>
+                                </div>
+                                <span class="font-semibold">12</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-500 mr-2">
+                                        <i class="fas fa-hospital"></i>
+                                    </div>
+                                    <span>医疗机构</span>
+                                </div>
+                                <span class="font-semibold">5</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 mr-2">
+                                        <i class="fas fa-school"></i>
+                                    </div>
+                                    <span>教育设施</span>
+                                </div>
+                                <span class="font-semibold">7</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-500 mr-2">
+                                        <i class="fas fa-subway"></i>
+                                    </div>
+                                    <span>交通设施</span>
+                                </div>
+                                <span class="font-semibold">9</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-500 mr-2">
+                                        <i class="fas fa-tree"></i>
+                                    </div>
+                                    <span>休闲场所</span>
+                                </div>
+                                <span class="font-semibold">8</span>
+                            </div>
+                        </div>
+                        <button class="w-full mt-4 text-emerald-500 border border-emerald-500 rounded-md py-2 hover:bg-emerald-50 transition">
+                            查看详细列表
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="font-semibold text-lg mb-4">设施分布</h3>
+                    <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <!-- 这里将放置饼图 -->
+                        <div class="text-gray-400">设施分布饼图</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="font-semibold text-lg mb-4">可达性分析</h3>
+                    <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <!-- 这里将放置柱状图 -->
+                        <div class="text-gray-400">可达性柱状图</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 区域对比页面 -->
+        <div id="compare" class="tab-content">
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4">区域对比</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">区域A</label>
+                        <input type="text" placeholder="输入地址、小区名或地标" class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">区域B</label>
+                        <input type="text" placeholder="输入地址、小区名或地标" class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-end">
+                    <button class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition">
+                        开始对比
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-4 border-b bg-blue-50">
+                        <h3 class="font-semibold">徐家汇商圈</h3>
+                    </div>
+                    <div class="map-container" style="height: 300px;"></div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-xl font-bold text-blue-500">4.6</div>
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div class="flex justify-between">
+                                <span>购物便利</span>
+                                <span class="font-medium">4.8</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>医疗资源</span>
+                                <span class="font-medium">4.5</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>教育设施</span>
+                                <span class="font-medium">4.2</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>交通便利</span>
+                                <span class="font-medium">4.9</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-4 border-b bg-purple-50">
+                        <h3 class="font-semibold">静安寺周边</h3>
+                    </div>
+                    <div class="map-container" style="height: 300px;"></div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-xl font-bold text-purple-500">4.3</div>
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div class="flex justify-between">
+                                <span>购物便利</span>
+                                <span class="font-medium">4.6</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>医疗资源</span>
+                                <span class="font-medium">4.0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>教育设施</span>
+                                <span class="font-medium">4.1</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>交通便利</span>
+                                <span class="font-medium">4.5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="font-semibold text-lg mb-4">详细对比</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">指标</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-blue-500 uppercase tracking-wider">徐家汇商圈</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-purple-500 uppercase tracking-wider">静安寺周边</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">差异</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">购物场所数量</td>
+                                <td class="px-6 py-4 whitespace-nowrap">12</td>
+                                <td class="px-6 py-4 whitespace-nowrap">10</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-green-500">+2</td>
+                            </tr>
+                            <tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">医疗机构数量</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-green-500">+1</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">教育设施数量</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-red-500">-1</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">交通设施数量</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-green-500">+1</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">休闲场所数量</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-red-500">-1</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">5分钟覆盖面积</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">0.8 km²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">0.7 km²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-green-500">+0.1 km²</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">10分钟覆盖面积</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">3.1 km²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">2.8 km²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-green-500">+0.3 km²</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-6">
+                        <h4 class="font-medium mb-3">对比结论</h4>
+                        <p class="text-gray-700">
+                            总体而言，徐家汇商圈在购物便利性、医疗资源和交通便利性方面略优于静安寺周边，而静安寺周边在教育设施和休闲场所方面略有优势。徐家汇商圈的5分钟和10分钟生活圈覆盖面积更大，整体便利性评分更高。
+                        </p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 评估报告页面 -->
+            <div id="report" class="tab-content">
+                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <h2 class="text-2xl font-bold mb-4">生活圈评估报告</h2>
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="flex-grow">
+                            <input type="text" placeholder="输入地址、小区名或地标" class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div class="flex space-x-2">
+                            <select class="px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                <option>标准报告</option>
+                                <option>详细报告</option>
+                                <option>专业报告</option>
+                            </select>
+                            <button class="bg-purple-500 text-white px-6 py-3 rounded-md hover:bg-purple-600 transition">
+                                生成报告
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                    <div class="p-6 bg-gradient-to-r from-purple-500 to-indigo-500 text-white">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-xl font-bold mb-1">徐家汇商圈生活圈评估报告</h3>
+                                <p class="text-sm opacity-80">生成时间：2023年10月15日</p>
+                            </div>
+                            <div class="text-3xl font-bold">4.6分</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <h4 class="text-lg font-semibold mb-3">区域概况</h4>
+                            <p class="text-gray-700 mb-3">
+                                徐家汇商圈位于上海市徐汇区，是上海重要的商业中心之一。该区域交通便利，商业繁荣，教育医疗资源丰富，是上海市区居住的热门选择。
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="text-sm text-gray-500 mb-1">区域面积</div>
+                                    <div class="font-semibold">约 5.2 km²</div>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="text-sm text-gray-500 mb-1">常住人口</div>
+                                    <div class="font-semibold">约 12.5万人</div>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="text-sm text-gray-500 mb-1">人口密度</div>
+                                    <div class="font-semibold">约 24,038人/km²</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="mb-6">
+                            <h4 class="text-lg font-semibold mb-3">生活圈评分</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <div class="flex justify-between text-sm mb-1">
+                                                <span>购物便利</span>
+                                                <span class="font-medium">4.8</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-purple-500 h-2 rounded-full" style="width: 96%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between text-sm mb-1">
+                                                <span>医疗资源</span>
+                                                <span class="font-medium">4.5</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-purple-500 h-2 rounded-full" style="width: 90%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between text-sm mb-1">
+                                                <span>教育设施</span>
+                                                <span class="font-medium">4.2</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-purple-500 h-2 rounded-full" style="width: 84%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between text-sm mb-1">
+                                                <span>交通便利</span>
+                                                <span class="font-medium">4.9</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-purple-500 h-2 rounded-full" style="width: 98%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between text-sm mb-1">
+                                                <span>休闲娱乐</span>
+                                                <span class="font-medium">4.6</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-purple-500 h-2 rounded-full" style="width: 92%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="h-48 bg-gray-100 rounded-lg flex items-center justify-center">
+                                    <!-- 这里将放置雷达图 -->
+                                    <div class="text-gray-400">生活圈评分雷达图</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="mb-6">
+                            <h4 class="text-lg font-semibold mb-3">设施分布</h4>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr class="bg-gray-50">
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">设施类型</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">5分钟圈内</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">10分钟圈内</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">主要设施</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">购物场所</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">5</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">12</td>
+                                            <td class="px-6 py-4">港汇恒隆广场、太平洋百货、家乐福</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">医疗机构</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">2</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">5</td>
+                                            <td class="px-6 py-4">仁济医院、瑞金医院徐汇分院</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">教育设施</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">3</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">7</td>
+                                            <td class="px-6 py-4">上海交通大学、徐汇中学、徐家汇小学</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">交通设施</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">4</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">9</td>
+                                            <td class="px-6 py-4">徐家汇地铁站、公交枢纽</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">休闲场所</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">3</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">8</td>
+                                            <td class="px-6 py-4">徐家汇公园、美罗城、万科广场</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+    
+                        <div class="mb-6">
+                            <h4 class="text-lg font-semibold mb-3">生活圈分析</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h5 class="font-medium mb-2">优势</h5>
+                                    <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                        <li>交通极为便利，多条地铁线路交汇，公交线路丰富</li>
+                                        <li>商业设施完善，大型购物中心和超市数量众多</li>
+                                        <li>医疗资源优质，多家三甲医院在10分钟生活圈内</li>
+                                        <li>休闲娱乐选择丰富，电影院、餐厅、公园一应俱全</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium mb-2">不足</h5>
+                                    <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                        <li>人口密度较高，高峰期可能拥挤</li>
+                                        <li>部分区域噪音污染较为明显</li>
+                                        <li>幼儿园资源相对紧张，入学竞争激烈</li>
+                                        <li>部分老旧小区基础设施有待更新</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div>
+                            <h4 class="text-lg font-semibold mb-3">总结评价</h4>
+                            <p class="text-gray-700 mb-3">
+                                徐家汇商圈作为上海市重要的商业中心之一，其生活便利性在全市范围内处于领先水平。该区域的5分钟和10分钟生活圈内设施丰富，尤其在交通便利性和商业配套方面表现突出。对于注重便利生活和丰富商业配套的人群而言，徐家汇商圈是极具吸引力的居住选择。
+                            </p>
+                            <p class="text-gray-700">
+                                建议：该区域适合追求便利生活的年轻白领和家庭居住，但需注意高峰期的人流量和噪音问题。选择小区时可优先考虑距离主干道稍远的位置，以平衡便利性和居住舒适度。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-4 border-t flex justify-between">
+                        <div class="flex space-x-4">
+                            <button class="flex items-center text-gray-600">
+                                <i class="fas fa-share-alt mr-1"></i> 分享
+                            </button>
+                            <button class="flex items-center text-gray-600">
+                                <i class="fas fa-download mr-1"></i> 下载PDF
+                            </button>
+                        </div>
+                        <button class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition">
+                            生成详细报告
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 数据中心页面 -->
+            <div id="data" class="tab-content">
+                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <h2 class="text-2xl font-bold mb-4">数据中心</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="text-blue-500 text-xl mb-1">
+                                <i class="fas fa-city"></i>
+                            </div>
+                            <div class="text-sm text-gray-500 mb-1">覆盖城市</div>
+                            <div class="text-2xl font-bold">42</div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="text-green-500 text-xl mb-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="text-sm text-gray-500 mb-1">POI数据</div>
+                            <div class="text-2xl font-bold">2.8百万</div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="text-yellow-500 text-xl mb-1">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="text-sm text-gray-500 mb-1">分析报告</div>
+                            <div class="text-2xl font-bold">12.5万</div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <div class="text-purple-500 text-xl mb-1">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="text-sm text-gray-500 mb-1">用户数量</div>
+                            <div class="text-2xl font-bold">8.6万</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h3 class="font-semibold text-lg mb-4">热门分析城市</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-2">
+                                        <span class="font-medium">1</span>
+                                    </div>
+                                    <span>上海市</span>
+                                </div>
+                                <span class="text-gray-500">28.5%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-2">
+                                        <span class="font-medium">2</span>
+                                    </div>
+                                    <span>北京市</span>
+                                </div>
+                                <span class="text-gray-500">22.3%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-2">
+                                        <span class="font-medium">3</span>
+                                    </div>
+                                    <span>深圳市</span>
+                                </div>
+                                <span class="text-gray-500">15.7%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-2">
+                                        <span class="font-medium">4</span>
+                                    </div>
+                                    <span>广州市</span>
+                                </div>
+                                <span class="text-gray-500">12.8%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mr-2">
+                                        <span class="font-medium">5</span>
+                                    </div>
+                                    <span>杭州市</span>
+                                </div>
+                                <span class="text-gray-500">8.2%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h3 class="font-semibold text-lg mb-4">热门分析指标</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>交通便利性</span>
+                                    <span class="font-medium">32.5%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 32.5%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>教育资源</span>
+                                    <span class="font-medium">24.8%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 24.8%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>医疗设施</span>
+                                    <span class="font-medium">18.3%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 18.3%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>购物便利</span>
+                                    <span class="font-medium">15.2%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 15.2%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>休闲娱乐</span>
+                                    <span class="font-medium">9.2%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 9.2%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h3 class="font-semibold text-lg mb-4">用户分布</h3>
+                        <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <!-- 这里将放置用户分布图 -->
+                            <div class="text-gray-400">用户分布地图</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-lg">数据更新日志</h3>
+                        <select class="px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+                            <option>全部城市</option>
+                            <option>上海市</option>
+                            <option>北京市</option>
+                            <option>深圳市</option>
+                        </select>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">更新时间</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">城市</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">数据类型</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">更新内容</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状态</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">2023-10-15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">上海市</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">POI数据</td>
+                                    <td class="px-6 py-4 text-sm">更新商业设施和医疗机构数据</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            已完成
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">2023-10-12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">北京市</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">路网数据</td>
+                                    <td class="px-6 py-4 text-sm">更新城市道路和交通设施数据</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            已完成
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">2023-10-10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">深圳市</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">教育设施</td>
+                                    <td class="px-6 py-4 text-sm">更新学校和教育机构数据</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                已完成
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">2023-10-08</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">广州市</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">休闲设施</td>
+                                        <td class="px-6 py-4 text-sm">更新公园、文化场所和娱乐设施数据</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                已完成
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">2023-10-05</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">杭州市</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">全量数据</td>
+                                        <td class="px-6 py-4 text-sm">新增杭州市生活圈数据</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                验证中
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4 flex justify-center">
+                            <nav class="flex items-center">
+                                <button class="px-3 py-1 rounded-md mr-1 text-gray-500 hover:bg-gray-100">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="px-3 py-1 rounded-md mx-1 bg-indigo-500 text-white">1</button>
+                                <button class="px-3 py-1 rounded-md mx-1 hover:bg-gray-100">2</button>
+                                <button class="px-3 py-1 rounded-md mx-1 hover:bg-gray-100">3</button>
+                                <button class="px-3 py-1 rounded-md ml-1 text-gray-500 hover:bg-gray-100">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        
+            <!-- 页脚 -->
+            <footer class="bg-gray-800 text-white mt-12 py-8">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">城市生活圈</h3>
+                            <p class="text-gray-400">
+                                基于五分钟、十分钟生活圈理念，为您提供全方位的居住环境评估工具。
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">功能</h3>
+                            <ul class="space-y-2 text-gray-400">
+                                <li><a href="#" class="hover:text-white">生活圈分析</a></li>
+                                <li><a href="#" class="hover:text-white">区域对比</a></li>
+                                <li><a href="#" class="hover:text-white">评估报告</a></li>
+                                <li><a href="#" class="hover:text-white">数据中心</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">关于我们</h3>
+                            <ul class="space-y-2 text-gray-400">
+                                <li><a href="#" class="hover:text-white">公司介绍</a></li>
+                                <li><a href="#" class="hover:text-white">团队成员</a></li>
+                                <li><a href="#" class="hover:text-white">合作伙伴</a></li>
+                                <li><a href="#" class="hover:text-white">联系我们</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">联系方式</h3>
+                            <ul class="space-y-2 text-gray-400">
+                                <li class="flex items-center">
+                                    <i class="fas fa-envelope mr-2"></i>
+                                    <a href="mailto:info@citylifecircle.com" class="hover:text-white">info@citylifecircle.com</a>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-phone mr-2"></i>
+                                    <a href="tel:+86-21-12345678" class="hover:text-white">+86-21-12345678</a>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>
+                                    <span>上海市徐汇区肇嘉浜路1000号</span>
+                                </li>
+                            </ul>
+                            <div class="flex space-x-4 mt-4">
+                                <a href="#" class="text-gray-400 hover:text-white">
+                                    <i class="fab fa-weixin text-xl"></i>
+                                </a>
+                                <a href="#" class="text-gray-400 hover:text-white">
+                                    <i class="fab fa-weibo text-xl"></i>
+                                </a>
+                                <a href="#" class="text-gray-400 hover:text-white">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
+                        <div class="text-gray-400 text-sm">
+                            &copy; 2023 城市生活圈. 保留所有权利.
+                        </div>
+                        <div class="flex space-x-4 mt-4 md:mt-0">
+                            <a href="#" class="text-gray-400 hover:text-white text-sm">隐私政策</a>
+                            <a href="#" class="text-gray-400 hover:text-white text-sm">使用条款</a>
+                            <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie政策</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        
+            <script>
+                function switchTab(tabId) {
+                    // 隐藏所有标签内容
+                    document.querySelectorAll('.tab-content').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    // 显示选中的标签内容
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // 更新导航栏高亮
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('text-emerald-600');
+                        link.classList.add('text-gray-600');
+                        link.classList.add('hover:text-emerald-500');
+                    });
+                    
+                    const activeLink = document.querySelector(`nav a[onclick="switchTab('${tabId}')"]`);
+                    if (activeLink) {
+                        activeLink.classList.remove('text-gray-600');
+                        activeLink.classList.remove('hover:text-emerald-500');
+                        activeLink.classList.add('text-emerald-600');
+                    }
+                }
+            </script>
+        </body>
+        </html>
+                                

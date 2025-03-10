@@ -10,3 +10,11 @@ Chatbot Arena是由加州大学伯克利分校SkyLab和LMArena的研究人员开
 收录了各种各样有用的工具页面导航。其中有一个叫Zlibrary的网站，可以免费下载各种书籍、论文、杂志、教材等。我检索了之前只有谷歌图书才有书籍在这里面也有。
 
 zlibrary最新镜像：https://zh.z-lib.work/
+
+3. [AI 工具集](https://ai-bot.cn/)
+
+集合了各种AI工具导航
+
+4. [SerpAPI](https://serpapi.com/search-api)
+
+SerpAPI是一个用于搜索API的工具，可以获取谷歌各类产品的搜索结果，每天免费100次。

@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简读日本史 - 张宏杰</title>
+    <!-- TailwindCSS 通过CDN引入 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // 配置Tailwind主题
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/css">
+        /* 自定义CSS样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 淡入动画 */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(156, 163, 175, 0.5);
+            border-radius: 20px;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: rgba(75, 85, 99, 0.5);
+        }
+        
+        /* 章节高亮效果 */
+        .highlight-section {
+            animation: highlightSection 2s ease-in-out;
+        }
+        
+        @keyframes highlightSection {
+            0%, 100% { background-color: transparent; }
+            50% { background-color: rgba(14, 165, 233, 0.1); }
+        }
+        
+        /* 响应式排版 */
+        @media (max-width: 640px) {
+            .pl-16 {
+                padding-left: 1rem;
+            }
+            
+            h2.text-3xl {
+                font-size: 1.5rem;
+            }
+            
+            .flex.items-center.mb-6 {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .w-12.h-12.rounded-full {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* 图片和媒体内容样式 */
+        img, video, iframe {
+            max-width: 100%;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        /* 引用样式 */
+        blockquote {
+            border-left: 4px solid #0ea5e9;
+            padding-left: 1rem;
+            font-style: italic;
+            margin: 1.5rem 0;
+            color: #6b7280;
+        }
+        
+        .dark blockquote {
+            color: #9ca3af;
+        }
+        
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .dark th, .dark td {
+            border-color: #374151;
+        }
+        
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+        }
+        
+        .dark th {
+            background-color: #1f2937;
+        }
+        
+        /* 代码块样式 */
+        pre {
+            background-color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        .dark pre {
+            background-color: #1f2937;
+        }
+        
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+        }
+        
+        /* 打印样式 */
+        @media print {
+            header, footer, button, .no-print {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white !important;
+                color: black !important;
+            }
+            
+            main {
+                padding: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl font-bold">简读日本史</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">张宏杰</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- 搜索按钮 -->
+                    <button id="search-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <!-- 章节导航按钮 - 移动端显示 -->
+                    <button id="toc-toggle" class="p-2 md:hidden rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <!-- 深色/浅色模式切换按钮 -->
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fas fa-sun hidden dark:block"></i>
+                        <i class="fas fa-moon block dark:hidden"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 搜索面板 -->
+    <div id="search-panel" class="fixed inset-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm hidden flex-col">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">搜索内容</h2>
+                <button id="search-close" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="relative">
+                <input type="text" id="search-input" placeholder="输入关键词搜索..." class="w-full p-4 pl-12 bg-gray-100 dark:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <div id="search-results" class="mt-6 space-y-4 max-h-96 overflow-y-auto">
+                <!-- 搜索结果将在这里显示 -->
+                <p class="text-gray-500 dark:text-gray-400 text-center">输入关键词开始搜索</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 修改为两列布局 -->
+        <div class="flex flex-col md:flex-row">
+            <!-- 侧边栏 -->
+            <aside id="sidebar" class="w-full md:w-64 lg:w-72 md:block hidden bg-white dark:bg-gray-900 md:bg-transparent md:dark:bg-transparent md:sticky md:top-24 md:h-[calc(100vh-6rem)] h-screen overflow-y-auto transition-all mb-8 md:mb-0 transform -translate-x-full md:translate-x-0 fixed md:relative inset-y-0 left-0 z-40 md:z-0 shadow-xl md:shadow-none duration-300 ease-in-out">
+                <div class="p-4 md:p-0 h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold">章节导航</h3>
+                        <button id="toc-close" class="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <nav class="space-y-1">
+                        <button id="toc-close" class="md:hidden w-full flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-800 mb-4">
+                            <span>关闭导航</span>
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <a href="#chapter1" class="toc-link flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <span class="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3 text-xs">1</span>
+                            <span>日本的起源与古代文明</span>
+                        </a>
+                        <a href="#chapter2" class="toc-link flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <span class="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3 text-xs">2</span>
+                            <span>平安时代的繁荣与文化</span>
+                        </a>
+                        <a href="#chapter3" class="toc-link flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <span class="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3 text-xs">3</span>
+                            <span>武士时代的兴起</span>
+                        </a>
+                        <a href="#chapter4" class="toc-link flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <span class="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3 text-xs">4</span>
+                            <span>江户时代的闭关锁国</span>
+                        </a>
+                        <a href="#chapter5" class="toc-link flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <span class="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3 text-xs">5</span>
+                            <span>明治维新与现代化</span>
+                        </a>
+                        <a href="#chapter6" class="toc-link flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <span class="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3 text-xs">6</span>
+                            <span>战后日本的发展</span>
+                        </a>
+                    </nav>
+                    
+                    <!-- 阅读进度 -->
+                    <div class="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <h4 class="text-sm font-medium mb-2">阅读进度</h4>
+                        <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div id="reading-progress" class="h-full bg-primary-500 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
+                            <span>0%</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 章节概览 -->
+                    <div class="mt-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="text-sm font-medium">章节概览</h4>
+                            <button id="expand-all" class="text-xs text-primary-500 hover:underline">展开全部</button>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="chapter-overview rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <div class="chapter-title p-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between cursor-pointer">
+                                    <span class="font-medium">第一章概览</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="chapter-content p-3 hidden">
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">本章介绍日本列岛最早的人类活动，从旧石器时代经绳文时代、弥生时代，到古坟时代的大和政权兴起，以及佛教传入和奈良时代的开始。</p>
+                                    <a href="#chapter1" class="text-xs text-primary-500 hover:underline mt-2 inline-block">阅读详情</a>
+                                </div>
+                            </div>
+                            <div class="chapter-overview rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <div class="chapter-title p-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between cursor-pointer">
+                                    <span class="font-medium">第二章概览</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="chapter-content p-3 hidden">
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">平安时代是日本古典文化的黄金时期，呈现了《源氏物语》等文学成就，以及藤原氏的外戚专权和国风文化的兴起。</p>
+                                    <a href="#chapter2" class="text-xs text-primary-500 hover:underline mt-2 inline-block">阅读详情</a>
+                                </div>
+                            </div>
+                            <!-- 更多章节概览将在JavaScript中动态添加 -->
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- 移除不再需要的sidebar-container -->
+            <!-- <div id="sidebar-container"></div> -->
+            
+            <!-- 主内容区域 -->
+            <main class="flex-1 md:ml-8 max-w-4xl">
+                <!-- 封面区域 -->
+                <div class="mb-12 text-center fade-in">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">简读日本史</h1>
+                    <p class="text-xl text-gray-600 dark:text-gray-400">作者：张宏杰</p>
+                    <div class="mt-6 w-24 h-1 bg-primary-500 mx-auto"></div>
+                </div>
+                
+                <!-- 内容区域 -->
+                <div id="book-content" class="prose dark:prose-invert max-w-none">
+                    <!-- 目录部分 -->
+                    <div class="mb-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-sm fade-in">
+                        <h2 class="text-2xl font-bold mb-4">目录</h2>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#chapter1" class="flex items-center text-primary-600 dark:text-primary-400 hover:underline">
+                                    <span class="mr-2">第一章</span>
+                                    <span class="text-gray-600 dark:text-gray-400">日本的起源与古代文明</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#chapter2" class="flex items-center text-primary-600 dark:text-primary-400 hover:underline">
+                                    <span class="mr-2">第二章</span>
+                                    <span class="text-gray-600 dark:text-gray-400">平安时代的繁荣与文化</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#chapter3" class="flex items-center text-primary-600 dark:text-primary-400 hover:underline">
+                                    <span class="mr-2">第三章</span>
+                                    <span class="text-gray-600 dark:text-gray-400">武士时代的兴起</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#chapter4" class="flex items-center text-primary-600 dark:text-primary-400 hover:underline">
+                                    <span class="mr-2">第四章</span>
+                                    <span class="text-gray-600 dark:text-gray-400">江户时代的闭关锁国</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#chapter5" class="flex items-center text-primary-600 dark:text-primary-400 hover:underline">
+                                    <span class="mr-2">第五章</span>
+                                    <span class="text-gray-600 dark:text-gray-400">明治维新与现代化</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#chapter6" class="flex items-center text-primary-600 dark:text-primary-400 hover:underline">
+                                    <span class="mr-2">第六章</span>
+                                    <span class="text-gray-600 dark:text-gray-400">战后日本的发展</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 第一章 -->
+                    <section id="chapter1" class="mb-16 fade-in">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-4">
+                                <i class="fas fa-scroll text-xl"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold">第一章：日本的起源与古代文明</h2>
+                        </div>
+                        
+                        <div class="pl-16">
+                            <p class="mb-4">日本列岛最早的人类活动可以追溯到旧石器时代，约4万年前。考古发现表明，这些早期居民主要依靠狩猎和采集为生。随着时间的推移，日本进入了绳文时代（约公元前14500年至公元前300年），这一时期因其特色陶器而得名，陶器上装饰有绳索压印的纹路。</p>
+                            
+                            <div class="my-8 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-l-4 border-primary-500">
+                                <h3 class="text-xl font-semibold mb-2">绳文时代的特点</h3>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>定居生活方式的开始</li>
+                                    <li>陶器制作技术的发展</li>
+                                    <li>原始农业的出现</li>
+                                    <li>复杂的祭祀仪式</li>
+                                </ul>
+                            </div>
+                            
+                            <p class="mb-4">公元前300年左右，日本进入弥生时代，这一时期的特点是水稻种植技术和青铜器、铁器的引入，这些技术主要来自中国大陆和朝鲜半岛。随着农业生产力的提高，人口增长，社会结构也变得更加复杂，出现了早期的阶级分化。</p>
+                            
+                            <p class="mb-4">3世纪至7世纪是日本的古坟时代，这一时期出现了大型的坟墓建筑，反映了当时统治者的权力和影响力。同时，这一时期也是日本与中国和朝鲜半岛文化交流最为频繁的时期之一。</p>
+                            
+                            <div class="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">大和政权的兴起</h4>
+                                    <p>4世纪左右，以奈良盆地为中心的大和政权逐渐崛起，成为日本第一个统一的政治实体。大和政权通过军事征服和联姻等方式，逐渐将其统治扩展到日本各地。</p>
+                                </div>
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">佛教的传入</h4>
+                                    <p>6世纪中叶，佛教经由朝鲜半岛传入日本，对日本的文化、艺术和政治产生了深远的影响。苏我氏等贵族家族积极支持佛教的传播，而其他家族则坚持传统的神道信仰。</p>
+                                </div>
+                            </div>
+                            
+                            <p class="mb-4">7世纪，日本实行了一系列重大的政治改革，包括著名的"大化改新"（645年）。这些改革借鉴了中国唐朝的政治制度，建立了以天皇为中心的中央集权制度，并实行了均田制等土地政策。</p>
+                            
+                            <p class="mb-4">8世纪初，日本建立了第一个固定的首都平城京（今奈良），标志着奈良时代的开始。这一时期，日本的文化、艺术和文学在佛教的影响下蓬勃发展，出现了《古事记》、《日本书纪》等重要的历史文献，记录了日本的神话传说和早期历史。</p>
+                        </div>
+                    </section>
+
+                    <!-- 第二章 -->
+                    <section id="chapter2" class="mb-16 fade-in">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-4">
+                                <i class="fas fa-feather-alt text-xl"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold">第二章：平安时代的繁荣与文化</h2>
+                        </div>
+                        
+                        <div class="pl-16">
+                            <p class="mb-4">794年，桓武天皇将首都从奈良迁至平安京（今京都），标志着平安时代的开始。这一时期持续了近四百年，直到1185年源氏战胜平氏，建立镰仓幕府为止。平安时代是日本古典文化的黄金时期，特别是在文学和艺术方面取得了辉煌成就。</p>
+                            
+                            <div class="my-8 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-l-4 border-primary-500">
+                                <h3 class="text-xl font-semibold mb-2">平安时代的文学成就</h3>
+                                <p class="mb-2">这一时期出现了许多杰出的文学作品，其中最著名的包括：</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>《源氏物语》 - 紫式部所著，被认为是世界上第一部长篇小说</li>
+                                    <li>《枕草子》 - 清少纳言的随笔集，展现了平安时代宫廷生活的细腻观察</li>
+                                    <li>《土佐日记》 - 纪贯之的日记体作品，是日本最早的日记文学之一</li>
+                                </ul>
+                            </div>
+                            
+                            <p class="mb-4">平安时代的政治特点是天皇的权力逐渐被藤原氏等贵族家族所掌控。藤原氏通过与皇室联姻，将自己的女儿嫁给天皇，使其子孙成为皇太子，从而掌握了实际的政治权力。这种外戚专权的政治模式在平安时代中后期达到顶峰。</p>
+                            
+                            <div class="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">国风文化的兴起</h4>
+                                    <p>平安时代中期，日本开始减少对中国文化的直接模仿，发展出更具本土特色的"国风文化"。这一时期，假名文字得到广泛使用，女性作家在文学领域崭露头角，和歌（日本传统诗歌）创作蓬勃发展。</p>
+                                </div>
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">贵族生活与美学</h4>
+                                    <p>平安时代的贵族生活讲究优雅与精致，形成了独特的美学观念，如"物哀"（对事物短暂性的感伤）和"幽玄"（对深邃微妙之美的追求）。贵族们热衷于举办各种雅集活动，如赏花、赏月、诗歌比赛等。</p>
+                                </div>
+                            </div>
+                            
+                            <p class="mb-4">平安时代后期，随着庄园制度的发展，地方武士势力逐渐崛起。中央政府对地方的控制能力减弱，各地区的武士家族开始争夺权力。其中，源氏和平氏两大武士集团的对抗最为激烈，最终导致了平安时代的结束。</p>
+                        </div>
+                    </section>
+                    
+                    <!-- 更多章节区域 -->
+                    <div id="more-chapters" class="hidden">
+                        <p class="text-gray-500 dark:text-gray-400 mb-4">更多章节内容正在缓慢加载中...</p>
+                        <button id="load-more" class="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-opacity-50">
+                            加载更多内容
+                        </button>
+                    </div>
+
+                    <!-- 替换为直接显示所有章节 -->
+                    <!-- 第三章：武士时代的兴起 -->
+                    <section id="chapter3" class="mb-16 fade-in">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-4">
+                                <i class="fas fa-scroll text-xl"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold">第三章：武士时代的兴起</h2>
+                        </div>
+                        
+                        <div class="pl-16">
+                            <p class="mb-4">12世纪末，随着源赖朝在1185年战胜平氏并建立镰仓幕府，日本进入了武士统治的时代。这一时期，政治权力从贵族手中转移到了武士阶层，形成了"公武二元"的政治体制：天皇和朝廷在京都保留名义上的权威，而实际的统治权则掌握在镰仓的幕府手中。</p>
+                            
+                            <div class="my-8 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-l-4 border-primary-500">
+                                <h3 class="text-xl font-semibold mb-2">镰仓幕府的特点</h3>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>以武士道精神为核心的统治理念</li>
+                                    <li>主从关系和封建制度的确立</li>
+                                    <li>守护、地头制度的实施</li>
+                                    <li>禅宗佛教的兴盛</li>
+                                </ul>
+                            </div>
+                            
+                            <p class="mb-4">13世纪，日本两次成功抵御了蒙古帝国的入侵（1274年和1281年）。这些战争虽然增强了武士的荣誉感，但也消耗了幕府的财政资源，导致无法充分奖赏参战武士，埋下了政权衰落的种子。</p>
+                            
+                            <div class="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">武士文化的形成</h4>
+                                    <p>镰仓时代，以武士为中心的文化逐渐形成。武士道精神强调忠诚、勇敢、自律和简朴，这些价值观深刻影响了日本社会。同时，禅宗佛教的传入为武士提供了精神支持，影响了日本的艺术和美学观念。</p>
+                                </div>
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">南北朝时期</h4>
+                                    <p>14世纪，日本经历了南北朝时期（1336-1392年），皇室分裂为南朝和北朝两个对立政权。这一时期，足利尊氏建立了室町幕府，开始了室町时代。最终，南北朝合一，但天皇的权力进一步削弱。</p>
+                                </div>
+                            </div>
+                            
+                            <p class="mb-4">室町时代（1336-1573年）初期，日本经济和文化繁荣发展。特别是在足利义满执政期间，与明朝建立了正式的贸易关系，促进了经济发展。这一时期也是日本传统文化的黄金时代，能乐、茶道、花道等艺术形式得到发展，禅宗美学对建筑和园林设计产生了深远影响。</p>
+                            
+                            <p class="mb-4">然而，室町时代后期，日本陷入了长达百年的战乱——战国时代（约1467-1568年）。各地的大名（封建领主）割据一方，相互争战。这一时期虽然动荡不安，但也是日本社会变革的重要阶段，为后来的统一奠定了基础。</p>
+                        </div>
+                    </section>
+
+                    <!-- 第四章：江户时代的闭关锁国 -->
+                    <section id="chapter4" class="mb-16 fade-in">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-4">
+                                <i class="fas fa-torii-gate text-xl"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold">第四章：江户时代的闭关锁国</h2>
+                        </div>
+                        
+                        <div class="pl-16">
+                            <p class="mb-4">经过战国时代的动荡，日本在16世纪末至17世纪初期经历了三位杰出政治家的统治：织田信长、丰臣秀吉和德川家康。1603年，德川家康建立了江户幕府，开启了长达约250年的江户时代（1603-1868年）。</p>
+                            
+                            <div class="my-8 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-l-4 border-primary-500">
+                                <h3 class="text-xl font-semibold mb-2">闭关锁国政策</h3>
+                                <p class="mb-2">德川幕府在17世纪实行了严格的闭关锁国政策，其主要特点包括：</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>禁止日本人出国，违者处死</li>
+                                    <li>禁止外国人（除少数荷兰、中国商人外）进入日本</li>
+                                    <li>限制外国贸易，仅长崎港允许有限的对外贸易</li>
+                                    <li>严禁基督教传播</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="my-8 relative">
+                                <div class="w-full h-48 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-map-marked-alt text-4xl text-gray-400 dark:text-gray-500"></i>
+                                    <span class="ml-3 text-gray-500 dark:text-gray-400">日本江户时代地图示意</span>
+                                </div>
+                                <div class="absolute -bottom-4 right-4 p-2 bg-white dark:bg-gray-800 rounded-md shadow-md text-xs">
+                                    <span class="text-gray-500">点击可查看大图</span>
+                                </div>
+                            </div>
+                            
+                            <p class="mb-4">江户时代的社会结构严格按照"士农工商"的等级制度组织，武士阶层位于社会顶端。这一时期，德川幕府通过设立藩制度（诸侯统治的领地）和参勤交代制度（大名定期到江户居住）等方式维持中央集权的统治。</p>
+                            
+                            <div class="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">经济与城市发展</h4>
+                                    <p>江户时代中期，随着农业生产力的提高和商品经济的发展，城市繁荣起来，特别是江户（今东京）、大阪和京都三大城市。商人阶层尽管在社会地位上处于最底层，但其经济实力却日益增强，形成了独特的"町人文化"。</p>
+                                </div>
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">文化与艺术</h4>
+                                    <p>江户时代是日本传统文化的繁荣时期，出现了浮世绘、歌舞伎、俳句等艺术形式。同时，兰学（荷兰学问）的发展使日本知识分子得以了解西方科学和医学知识，为后来的明治维新奠定了思想基础。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="my-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
+                                <h4 class="flex items-center text-primary-600 dark:text-primary-400 font-medium mb-2">
+                                    <i class="fas fa-lightbulb mr-2"></i>
+                                    <span>历史小知识</span>
+                                </h4>
+                                <p class="text-sm">葛饰北斋的浮世绘作品《富岳三十六景》中的《神奈川冲浪里》是江户时代最著名的艺术作品之一，不仅在日本广为流传，还对19世纪末欧洲的印象派艺术产生了重要影响。</p>
+                            </div>
+                            
+                            <p class="mb-4">江户时代后期，随着幕府权威的衰退和西方列强的入侵威胁，日本社会逐渐认识到改革的必要性。1853年，美国海军准将佩里率"黑船"来航，迫使日本开放国门，最终导致了江户时代的结束和明治维新的开始。</p>
+                        </div>
+                    </section>
+
+                    <!-- 第五章：明治维新与现代化 -->
+                    <section id="chapter5" class="mb-16 fade-in">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-4">
+                                <i class="fas fa-industry text-xl"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold">第五章：明治维新与现代化</h2>
+                        </div>
+                        
+                        <div class="pl-16">
+                            <p class="mb-4">1868年，随着德川幕府的倒台和明治天皇亲政，日本进入了明治时代（1868-1912年）。这一时期的主要历史事件是明治维新，这是一场全面的政治、经济和社会改革运动，旨在使日本迅速实现现代化，以应对西方列强的挑战。</p>
+                            
+                            <div class="my-8 relative">
+                                <div class="w-full h-1 bg-gray-200 dark:bg-gray-700 absolute top-3 z-0"></div>
+                                <div class="relative z-10 flex justify-between">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs">1</div>
+                                        <div class="mt-2 text-center">
+                                            <div class="text-sm font-medium">1868年</div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">明治维新开始</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs">2</div>
+                                        <div class="mt-2 text-center">
+                                            <div class="text-sm font-medium">1889年</div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">《大日本帝国宪法》颁布</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs">3</div>
+                                        <div class="mt-2 text-center">
+                                            <div class="text-sm font-medium">1894-1895年</div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">甲午战争</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs">4</div>
+                                        <div class="mt-2 text-center">
+                                            <div class="text-sm font-medium">1904-1905年</div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">日俄战争</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs">5</div>
+                                        <div class="mt-2 text-center">
+                                            <div class="text-sm font-medium">1912年</div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">明治天皇逝世</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="my-8 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-l-4 border-primary-500">
+                                <h3 class="text-xl font-semibold mb-2">明治维新的主要改革</h3>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>废除封建制度，建立中央集权国家</li>
+                                    <li>实行地方行政区划改革（废藩置县）</li>
+                                    <li>颁布《大日本帝国宪法》，确立君主立宪制</li>
+                                    <li>推行教育普及，建立现代学校制度</li>
+                                    <li>发展现代工业和铁路等基础设施</li>
+                                    <li>实行征兵制，建立现代军队</li>
+                                </ul>
+                            </div>
+                            
+                            <p class="mb-4">在"富国强兵""脱亚入欧"的口号指导下，日本积极学习西方先进技术和制度，同时保留了天皇制等传统元素。这种"和魂洋才"的发展道路使日本迅速崛起为亚洲第一个工业化国家。</p>
+                            
+                            <div class="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">对外扩张</h4>
+                                    <p>随着国力的增强，日本开始了对外扩张的道路。1894-1895年，日本在甲午战争中战胜清朝，获得台湾和巨额赔款。1904-1905年，日本在日俄战争中战胜沙俄，获得在东北和朝鲜的特殊权益。1910年，日本正式吞并朝鲜，使其成为日本的殖民地。</p>
+                                </div>
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">社会文化变迁</h4>
+                                    <p>明治时代，日本社会经历了巨大变革。传统的武士阶层被废除，新兴的资产阶级和工人阶级出现。西方的思想、文化和生活方式传入日本，与传统文化相融合，形成了独特的明治文化。同时，国民意识和民族认同感也得到了强化。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="my-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
+                                <h4 class="flex items-center text-primary-600 dark:text-primary-400 font-medium mb-2">
+                                    <i class="fas fa-quote-left mr-2"></i>
+                                    <span>名人名言</span>
+                                </h4>
+                                <p class="text-sm italic">"日本的明治维新之所以成功，在于它既不是彻底的革命，也不是顽固的保守，而是在保留传统精神的同时，积极吸收西方先进文明。" —— 福泽谕吉</p>
+                            </div>
+                            
+                            <p class="mb-4">明治维新是世界历史上一次成功的现代化转型，它使日本在短短几十年内从一个落后的封建国家跃升为世界强国。然而，明治时代的急速现代化也带来了社会问题，如贫富差距扩大、工人权益受损等，同时对外扩张政策也为后来的军国主义埋下了种子。</p>
+                        </div>
+                    </section>
+
+                    <!-- 第六章：战后日本的发展 -->
+                    <section id="chapter6" class="mb-16 fade-in">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-4">
+                                <i class="fas fa-city text-xl"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold">第六章：战后日本的发展</h2>
+                        </div>
+                        
+                        <div class="pl-16">
+                            <p class="mb-4">1945年8月，日本在第二次世界大战中战败并宣布无条件投降。战后，日本在美国为首的盟军占领下经历了一系列重大改革，开启了和平发展的新时代。</p>
+                            
+                            <div class="my-8 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-l-4 border-primary-500">
+                                <h3 class="text-xl font-semibold mb-2">盟军占领时期的改革（1945-1952年）</h3>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>颁布和平宪法，放弃战争权，保障基本人权</li>
+                                    <li>天皇退位神坛，成为"象征"</li>
+                                    <li>解散财阀，进行土地改革</li>
+                                    <li>推行民主教育</li>
+                                    <li>促进妇女解放和劳工权益保障</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="my-8 relative overflow-hidden rounded-lg">
+                                <div class="w-full h-64 bg-white dark:bg-gray-800 flex flex-col items-center justify-center p-4">
+                                    <!-- 经济增长曲线 SVG -->
+                                    <svg width="100%" height="200" viewBox="0 0 800 200" class="overflow-visible">
+                                        <!-- 坐标轴 -->
+                                        <line x1="50" y1="180" x2="750" y2="180" stroke="#718096" stroke-width="2"/>
+                                        <line x1="50" y1="20" x2="50" y2="180" stroke="#718096" stroke-width="2"/>
+                                        
+                                        <!-- 坐标标记 -->
+                                        <text x="45" y="30" text-anchor="end" font-size="12" fill="currentColor">高</text>
+                                        <text x="45" y="100" text-anchor="end" font-size="12" fill="currentColor">中</text>
+                                        <text x="45" y="175" text-anchor="end" font-size="12" fill="currentColor">低</text>
+                                        
+                                        <!-- 横轴年份标记 -->
+                                        <text x="50" y="195" text-anchor="middle" font-size="12" fill="currentColor">1950</text>
+                                        <text x="750" y="195" text-anchor="middle" font-size="12" fill="currentColor">2000</text>
+                                        <text x="260" y="195" text-anchor="middle" font-size="12" fill="currentColor">1960</text>
+                                        <text x="400" y="195" text-anchor="middle" font-size="12" fill="currentColor">1970</text>
+                                        <text x="540" y="195" text-anchor="middle" font-size="12" fill="currentColor">1980</text>
+                                        <text x="680" y="195" text-anchor="middle" font-size="12" fill="currentColor">1990</text>
+                                        
+                                        <!-- 经济增长曲线 -->
+                                        <path d="M50,150 Q150,140 200,90 T400,40 T600,60 T750,100" 
+                                              fill="none" 
+                                              stroke="#0ea5e9" 
+                                              stroke-width="3"
+                                              class="drop-shadow-md"/>
+                                        
+                                        <!-- 关键点 -->
+                                        <circle cx="50" cy="150" r="4" fill="#0ea5e9"/>
+                                        <circle cx="200" cy="90" r="4" fill="#0ea5e9"/>
+                                        <circle cx="400" cy="40" r="4" fill="#0ea5e9"/>
+                                        <circle cx="600" cy="60" r="4" fill="#0ea5e9"/>
+                                        <circle cx="750" cy="100" r="4" fill="#0ea5e9"/>
+                                        
+                                        <!-- 标注高速增长期 -->
+                                        <rect x="200" y="10" width="250" height="20" rx="10" fill="rgba(14, 165, 233, 0.2)"/>
+                                        <text x="325" y="24" text-anchor="middle" font-size="12" fill="#0ea5e9" font-weight="bold">高速增长期</text>
+                                        <line x1="325" y1="30" x2="325" y2="40" stroke="#0ea5e9" stroke-width="1" stroke-dasharray="2"/>
+                                        
+                                        <!-- 标注泡沫经济 -->
+                                        <rect x="550" y="30" width="100" height="20" rx="10" fill="rgba(14, 165, 233, 0.2)"/>
+                                        <text x="600" y="44" text-anchor="middle" font-size="12" fill="#0ea5e9" font-weight="bold">泡沫经济</text>
+                                        <line x1="600" y1="50" x2="600" y2="60" stroke="#0ea5e9" stroke-width="1" stroke-dasharray="2"/>
+                                    </svg>
+                                    <span class="mt-2 text-gray-500 dark:text-gray-400 text-sm">日本经济增长曲线图（1950-2000）</span>
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 p-3 bg-black/50 backdrop-blur-sm">
+                                    <p class="text-white text-sm">日本经济在20世纪60-80年代经历了高速增长，被称为"经济奇迹"</p>
+                                </div>
+                            </div>
+                            
+                            <p class="mb-4">1952年，《旧金山和平条约》生效，日本恢复独立。此后，日本集中精力发展经济，实行"轻武装、重经济"的政策。在政府的产业政策引导下，结合企业的创新精神和国民的勤劳品质，日本经济迅速腾飞。</p>
+                            
+                            <div class="my-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
+                                <h4 class="flex items-center text-primary-600 dark:text-primary-400 font-medium mb-2">
+                                    <i class="fas fa-lightbulb mr-2"></i>
+                                    <span>日本经济腾飞的关键因素</span>
+                                </h4>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
+                                    <div class="text-center p-2 bg-white dark:bg-gray-800 rounded shadow-sm">
+                                        <i class="fas fa-hands-helping text-primary-500 text-xl mb-1"></i>
+                                        <p class="text-xs">政企合作</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-white dark:bg-gray-800 rounded shadow-sm">
+                                        <i class="fas fa-graduation-cap text-primary-500 text-xl mb-1"></i>
+                                        <p class="text-xs">高素质劳动力</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-white dark:bg-gray-800 rounded shadow-sm">
+                                        <i class="fas fa-flask text-primary-500 text-xl mb-1"></i>
+                                        <p class="text-xs">技术创新</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-white dark:bg-gray-800 rounded shadow-sm">
+                                        <i class="fas fa-globe-asia text-primary-500 text-xl mb-1"></i>
+                                        <p class="text-xs">全球化战略</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="my-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">经济高速增长</h4>
+                                    <p>20世纪60年代至80年代，日本经济保持年均近10%的增长率，国民生产总值跃居世界第二，被称为"经济奇迹"。日本企业如丰田、索尼等成为全球知名品牌，"日本制造"成为高品质的代名词。到80年代末，日本一度被视为将要超越美国的经济强国。</p>
+                                </div>
+                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold mb-2">泡沫经济与"失落的十年"</h4>
+                                    <p>1990年代初，日本经济泡沫破裂，股市和房地产价格暴跌，银行系统陷入危机。此后，日本经济长期陷入低迷，经历了所谓的"失落的十年"（后来延长为"失落的二十年"）。政府通过多次经济刺激计划和零利率政策等措施试图振兴经济，但效果有限。</p>
+                                </div>
+                            </div>
+                            
+                            <p class="mb-4">在政治方面，战后日本形成了以自民党为主导的政党政治格局。尽管政治制度民主化，但政治生态仍受到官僚体系、大企业等传统势力的影响。在国际关系上，日本与美国保持紧密的同盟关系，同时努力扩大在国际舞台上的影响力。</p>
+                            
+                            <p class="mb-4">进入21世纪，日本面临人口老龄化、低生育率、财政赤字等结构性挑战。同时，中国和其他亚洲经济体的崛起也对日本的地区领导地位构成了挑战。面对这些挑战，日本正在探索新的发展道路，包括推动技术创新、参与区域经济合作、调整防卫政策等。</p>
+                        </div>
+                    </section>
+
+                    <p class="mb-4">总结来看，战后日本的发展道路是和平与经济繁荣的道路，与其战前的军国主义扩张形成鲜明对比。这一转变不仅使日本成为世界主要经济体，也为其他发展中国家提供了现代化的重要参考。</p>
+                         </div>
+                     </section>
+
+                     <!-- 重要历史人物 -->
+                     <section id="historical-figures" class="mb-16 fade-in">
+                         <div class="flex items-center mb-6">
+                             <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-4">
+                                 <i class="fas fa-user-alt text-xl"></i>
+                             </div>
+                             <h2 class="text-3xl font-bold">日本历史重要人物</h2>
+                         </div>
+                         
+                         <div class="pl-16">
+                             <p class="mb-4">日本历史上涌现了许多对国家发展产生深远影响的重要人物。以下是各个时期的代表性人物及其贡献。</p>
+                             
+                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+                                 <!-- 聖徳太子 -->
+                                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                                     <div class="p-4">
+                                         <div class="flex items-center mb-3">
+                                             <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3">
+                                                 <span class="text-xs font-medium">古代</span>
+                                             </div>
+                                             <h3 class="text-lg font-semibold">聖徳太子</h3>
+                                         </div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">推行十七条宪法，推动中国文化和佛教在日本的传播，是日本古代最重要的政治家和思想家。</p>
+                                         <div class="text-xs text-gray-500 dark:text-gray-500">574年-622年</div>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 源赖朝 -->
+                                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                                     <div class="p-4">
+                                         <div class="flex items-center mb-3">
+                                             <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3">
+                                                 <span class="text-xs font-medium">中世</span>
+                                             </div>
+                                             <h3 class="text-lg font-semibold">源赖朝</h3>
+                                         </div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">平定平氏后建立镰仓幕府，成为日本第一位征夷大将军，开创了武士统治的时代。</p>
+                                         <div class="text-xs text-gray-500 dark:text-gray-500">1147年-1199年</div>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 织田信长 -->
+                                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                                     <div class="p-4">
+                                         <div class="flex items-center mb-3">
+                                             <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3">
+                                                 <span class="text-xs font-medium">战国</span>
+                                             </div>
+                                             <h3 class="text-lg font-semibold">织田信长</h3>
+                                         </div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">战国时代杰出的军事领袖，推行兵农分离和楽市楽座政策，为统一日本奠定基础。</p>
+                                         <div class="text-xs text-gray-500 dark:text-gray-500">1534年-1582年</div>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 德川家康 -->
+                                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                                     <div class="p-4">
+                                         <div class="flex items-center mb-3">
+                                             <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3">
+                                                 <span class="text-xs font-medium">江户</span>
+                                             </div>
+                                             <h3 class="text-lg font-semibold">德川家康</h3>
+                                         </div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">江户幕府创建者，建立了长达260多年的和平统治时期，奠定了近代日本的基础。</p>
+                                         <div class="text-xs text-gray-500 dark:text-gray-500">1543年-1616年</div>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 明治天皇 -->
+                                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                                     <div class="p-4">
+                                         <div class="flex items-center mb-3">
+                                             <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3">
+                                                 <span class="text-xs font-medium">明治</span>
+                                             </div>
+                                             <h3 class="text-lg font-semibold">明治天皇</h3>
+                                         </div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">明治维新时期的日本天皇，在其在位期间，日本从封建社会迅速转变为现代化国家。</p>
+                                         <div class="text-xs text-gray-500 dark:text-gray-500">1852年-1912年</div>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 伊藤博文 -->
+                                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                                     <div class="p-4">
+                                         <div class="flex items-center mb-3">
+                                             <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-3">
+                                                 <span class="text-xs font-medium">明治</span>
+                                             </div>
+                                             <h3 class="text-lg font-semibold">伊藤博文</h3>
+                                         </div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">日本首位内阁总理大臣，起草《大日本帝国宪法》，是明治维新的重要推动者。</p>
+                                         <div class="text-xs text-gray-500 dark:text-gray-500">1841年-1909年</div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </section>
+                     
+                     <!-- 历史发展时间轴 -->
+                     <section id="timeline" class="mb-16 fade-in">
+                         <div class="flex items-center mb-6">
+                             <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-4">
+                                 <i class="fas fa-stream text-xl"></i>
+                             </div>
+                             <h2 class="text-3xl font-bold">日本历史发展时间轴</h2>
+                         </div>
+                         
+                         <div class="pl-16">
+                             <p class="mb-8">以下是日本历史上的重要事件和时代变迁，按时间顺序排列。</p>
+                             
+                             <div class="relative border-l-2 border-primary-500 pl-8 ml-4">
+                                 <!-- 史前至古坟时代 -->
+                                 <div class="mb-12 relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">史前至古坟时代</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">约前13000年 - 538年</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">从旧石器时代、绳文时代、弥生时代到古坟时代，形成了日本早期社会和国家雏形。大和政权崛起，建立了初步的中央集权制度。</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 飞鸟、奈良时代 -->
+                                 <div class="mb-12 relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">飞鸟、奈良时代</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">538年 - 794年</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">佛教传入日本并得到广泛传播，聖徳太子推行十七条宪法，大化改新建立了律令制度，奈良成为首都，平城京建成。</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 平安时代 -->
+                                 <div class="mb-12 relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">平安时代</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">794年 - 1185年</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">平安京（今京都）成为首都，国风文化兴盛，《源氏物语》等文学作品问世，藤原氏掌握实权，末期源平之争爆发。</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 镰仓时代 -->
+                                 <div class="mb-12 relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">镰仓时代</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">1185年 - 1333年</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">源赖朝建立镰仓幕府，开启武士统治时代，两次抵御蒙古入侵，禅宗在武士阶层广泛传播。</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 室町时代与战国时代 -->
+                                 <div class="mb-12 relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">室町时代与战国时代</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">1336年 - 1573年</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">足利尊氏建立室町幕府，南北朝合一，应仁之乱爆发后进入战国时代，各地大名割据。织田信长开始统一日本。</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 安土桃山时代 -->
+                                 <div class="mb-12 relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">安土桃山时代</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">1573年 - 1603年</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">织田信长统一大部分日本，丰臣秀吉完成统一，实施兵农分离政策，发动侵略朝鲜战争。</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 江户时代 -->
+                                 <div class="mb-12 relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">江户时代</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">1603年 - 1868年</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">德川家康建立江户幕府，实行闭关锁国政策，形成"士农工商"等级制度，町人文化兴盛，幕末期受西方压力被迫开国。</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 明治时代 -->
+                                 <div class="mb-12 relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">明治时代</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">1868年 - 1912年</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">明治维新开始，推行政治、经济、社会改革，建立现代国家制度，发动甲午战争和日俄战争，成为亚洲强国。</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 大正、昭和前期 -->
+                                 <div class="mb-12 relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">大正、昭和前期</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">1912年 - 1945年</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">大正民主期后军国主义兴起，侵略中国和东南亚，发动太平洋战争，最终在二战中战败。</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- 战后至现代 -->
+                                 <div class="relative">
+                                     <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
+                                         <div class="w-4 h-4 rounded-full bg-white"></div>
+                                     </div>
+                                     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+                                         <h3 class="text-lg font-semibold mb-2">战后至现代</h3>
+                                         <div class="text-sm font-medium text-primary-600 dark:text-primary-400 mb-3">1945年 - 现在</div>
+                                         <p class="text-sm text-gray-600 dark:text-gray-400">美国占领改革，和平宪法颁布，经济高速增长，成为世界第二大经济体，泡沫经济破裂后进入长期停滞，面临少子化老龄化等挑战。</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </section>
+                     
+                     <!-- 日本历史思维导图 -->
+                     <section id="mindmap" class="mb-16 fade-in">
+                         <div class="flex items-center mb-6">
+                             <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center text-primary-600 dark:text-primary-400 mr-4">
+                                 <i class="fas fa-project-diagram text-xl"></i>
+                             </div>
+                             <h2 class="text-3xl font-bold">日本历史思维导图</h2>
+                         </div>
+                         
+                         <div class="pl-16">
+                             <p class="mb-8">以下思维导图展示了日本历史的主要发展脉络和各时期的特点。</p>
+                             
+                             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm overflow-x-auto">
+                                 <div class="min-w-[800px]">
+                                     <!-- 思维导图 -->
+                                     <div class="flex justify-center mb-8">
+                                         <div class="p-4 rounded-full bg-primary-500 text-white text-center">
+                                             <div class="font-bold">日本历史</div>
+                                             <div class="text-xs">总体发展脉络</div>
+                                         </div>
+                                     </div>
+                                     
+                                     <div class="grid grid-cols-3 gap-8">
+                                         <!-- 古代 -->
+                                         <div>
+                                             <div class="mb-4">
+                                                 <div class="p-3 rounded-lg bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-100 text-center font-semibold">
+                                                     古代时期
+                                                 </div>
+                                                 <div class="h-8 border-l-2 border-dashed border-primary-500 ml-1/2 transform translate-x-1/2"></div>
+                                             </div>
+                                             
+                                             <div class="space-y-3">
+                                                 <div class="p-2 rounded bg-gray-100 dark:bg-gray-700 text-sm">
+                                                     <span class="font-medium">大和政权形成</span>
+                                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">3世纪-5世纪</p>
+                                                 </div>
+                                                 <div class="p-2 rounded bg-gray-100 dark:bg-gray-700 text-sm">
+                                                     <span class="font-medium">飞鸟奈良文化</span>
+                                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">唐制改革、佛教传播</p>
+                                                 </div>
+                                                 <div class="p-2 rounded bg-gray-100 dark:bg-gray-700 text-sm">
+                                                     <span class="font-medium">平安贵族社会</span>
+                                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">国风文化、源氏物语</p>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         
+                                         <!-- 中世 -->
+                                         <div>
+                                             <div class="mb-4">
+                                                 <div class="p-3 rounded-lg bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-100 text-center font-semibold">
+                                                     中世时期
+                                                 </div>
+                                                 <div class="h-8 border-l-2 border-dashed border-primary-500 ml-1/2 transform translate-x-1/2"></div>
+                                             </div>
+                                             
+                                             <div class="space-y-3">
+                                                 <div class="p-2 rounded bg-gray-100 dark:bg-gray-700 text-sm">
+                                                     <span class="font-medium">镰仓幕府</span>
+                                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">武士统治、蒙古入侵</p>
+                                                 </div>
+                                                 <div class="p-2 rounded bg-gray-100 dark:bg-gray-700 text-sm">
+                                                     <span class="font-medium">室町幕府</span>
+                                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">南北朝、足利氏、日明贸易</p>
+                                                 </div>
+                                                 <div class="p-2 rounded bg-gray-100 dark:bg-gray-700 text-sm">
+                                                     <span class="font-medium">战国时代</span>
+                                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">群雄割据、织丰统一</p>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         
+                                         <!-- 近现代 -->
+                                         <div>
+                                             <div class="mb-4">
+                                                 <div class="p-3 rounded-lg bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-100 text-center font-semibold">
+                                                     近现代时期
+                                                 </div>
+                                                 <div class="h-8 border-l-2 border-dashed border-primary-500 ml-1/2 transform translate-x-1/2"></div>
+                                             </div>
+                                             
+                                             <div class="space-y-3">
+                                                 <div class="p-2 rounded bg-gray-100 dark:bg-gray-700 text-sm">
+                                                     <span class="font-medium">江户幕府</span>
+                                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">闭关锁国、町人文化</p>
+                                                 </div>
+                                                 <div class="p-2 rounded bg-gray-100 dark:bg-gray-700 text-sm">
+                                                     <span class="font-medium">明治维新</span>
+                                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">近代化改革、富国强兵</p>
+                                                 </div>
+                                                 <div class="p-2 rounded bg-gray-100 dark:bg-gray-700 text-sm">
+                                                     <span class="font-medium">战后日本</span>
+                                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">和平发展、经济腾飞</p>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             <p class="mt-6 text-sm text-gray-500 dark:text-gray-400">
+                                 通过这张思维导图，我们可以清晰地看到日本历史的总体发展脉络，从古代的大和政权形成和贵族文化兴盛，到中世的武士统治和战国混战，再到近现代的德川幕府和明治维新，最后是二战后的和平发展道路。
+                             </p>
+                         </div>
+                     </section>
+                  </div>
+              </main>
+        </div>
+    </div>
+
+    <!-- 页脚区域 -->
+    <footer class="bg-gray-100 dark:bg-gray-800 py-8 mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-lg font-semibold mb-2">作者信息</h3>
+                        <p class="text-gray-600 dark:text-gray-400">作者姓名: Sean</p>
+                        <!-- <div class="flex space-x-4 mt-2">
+                            <a href="https://twitter.com/sean" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400">
+                                <i class="fab fa-twitter"></i>
+                                <span class="ml-1">Twitter/X</span>
+                            </a>
+                        </div> -->
+                    </div>
+                    <div class="text-gray-600 dark:text-gray-400 text-sm">
+                        <p>© <span id="current-year"></span> Sean. 保留所有权利。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 注释和笔记弹窗 -->
+    <div id="annotation-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg shadow-xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">添加笔记</h3>
+                            `;
+                            
+                            // 插入到内容区域
+                            bookContent.insertBefore(newChapter, moreChaptersDiv);
+                            
+                            // 淡入动画
+                            setTimeout(() => {
+                                newChapter.style.opacity = '1';
+                            }, 100);
+                            
+                            // 如果到了最后一章，隐藏加载更多按钮
+                            if (currentChapter === 6) {
+                                moreChaptersDiv.innerHTML = '<p class="text-gray-500 dark:text-gray-400">已加载全部内容</p>';
+                            } else {
+                                // 恢复按钮状态
+                                this.disabled = false;
+                                this.innerHTML = '加载更多内容';
+                            }
+                        }
+                    }, 1500); // 1.5秒延迟，模拟加载过程
+                });
+            }
+        });
+    </script>
+    
+    <!-- 添加阅读进度和章节概览功能 -->
+    <script>
+        // 设置当前年份
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // 阅读进度功能
+            function updateReadingProgress() {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight - windowHeight;
+                const scrollTop = window.scrollY;
+                const progress = Math.round((scrollTop / documentHeight) * 100);
+                
+                // 确保进度值在0-100之间
+                const safeProgress = Math.max(0, Math.min(100, progress));
+                
+                // 更新进度条
+                const progressBar = document.getElementById('reading-progress');
+                const progressPercent = document.getElementById('progress-percent');
+                
+                if (progressBar && progressPercent) {
+                    progressBar.style.width = safeProgress + '%';
+                    progressPercent.textContent = safeProgress + '%';
+                }
+            }
+            
+            // 初始化阅读进度
+            updateReadingProgress();
+            
+            // 监听滚动事件更新阅读进度
+            window.addEventListener('scroll', updateReadingProgress);
+            
+            // 章节概览功能
+            function initChapterOverviews() {
+                // 添加更多章节概览
+                const overviewsContainer = document.querySelector('.space-y-2');
+                
+                if (!overviewsContainer) return;
+                
+                // 添加第三章概览
+                if (!document.querySelector('[data-chapter="3"]')) {
+                    const chapter3Overview = document.createElement('div');
+                    chapter3Overview.className = 'chapter-overview rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden';
+                    chapter3Overview.setAttribute('data-chapter', '3');
+                    chapter3Overview.innerHTML = `
+                        <div class="chapter-title p-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between cursor-pointer">
+                            <span class="font-medium">第三章概览</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="chapter-content p-3 hidden">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">本章介绍武士时代的兴起，从镰仓幕府到室町幕府，武士道精神的形成，以及禅宗对日本文化的影响。</p>
+                            <a href="#chapter3" class="text-xs text-primary-500 hover:underline mt-2 inline-block">阅读详情</a>
+                        </div>
+                    `;
+                    overviewsContainer.appendChild(chapter3Overview);
+                }
+                
+                // 添加第四章概览
+                if (!document.querySelector('[data-chapter="4"]')) {
+                    const chapter4Overview = document.createElement('div');
+                    chapter4Overview.className = 'chapter-overview rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden';
+                    chapter4Overview.setAttribute('data-chapter', '4');
+                    chapter4Overview.innerHTML = `
+                        <div class="chapter-title p-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between cursor-pointer">
+                            <span class="font-medium">第四章概览</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="chapter-content p-3 hidden">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">本章介绍江户时代的闭关锁国政策，德川幕府的统治结构，以及町人文化的繁荣发展。</p>
+                            <a href="#chapter4" class="text-xs text-primary-500 hover:underline mt-2 inline-block">阅读详情</a>
+                        </div>
+                    `;
+                    overviewsContainer.appendChild(chapter4Overview);
+                }
+                
+                // 添加第五章概览
+                if (!document.querySelector('[data-chapter="5"]')) {
+                    const chapter5Overview = document.createElement('div');
+                    chapter5Overview.className = 'chapter-overview rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden';
+                    chapter5Overview.setAttribute('data-chapter', '5');
+                    chapter5Overview.innerHTML = `
+                        <div class="chapter-title p-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between cursor-pointer">
+                            <span class="font-medium">第五章概览</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="chapter-content p-3 hidden">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">本章介绍明治维新和日本现代化进程，从封建社会到工业化国家的转变，以及日本对外扩张政策的开始。</p>
+                            <a href="#chapter5" class="text-xs text-primary-500 hover:underline mt-2 inline-block">阅读详情</a>
+                        </div>
+                    `;
+                    overviewsContainer.appendChild(chapter5Overview);
+                }
+                
+                // 添加第六章概览
+                if (!document.querySelector('[data-chapter="6"]')) {
+                    const chapter6Overview = document.createElement('div');
+                    chapter6Overview.className = 'chapter-overview rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden';
+                    chapter6Overview.setAttribute('data-chapter', '6');
+                    chapter6Overview.innerHTML = `
+                        <div class="chapter-title p-3 bg-gray-50 dark:bg-gray-800 flex items-center justify-between cursor-pointer">
+                            <span class="font-medium">第六章概览</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="chapter-content p-3 hidden">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">本章介绍战后日本的发展，从美国占领时期的改革到经济高速增长，以及面临的少子化老龄化等当代挑战。</p>
+                            <a href="#chapter6" class="text-xs text-primary-500 hover:underline mt-2 inline-block">阅读详情</a>
+                        </div>
+                    `;
+                    overviewsContainer.appendChild(chapter6Overview);
+                }
+                
+                // 为所有章节标题添加点击事件
+                document.querySelectorAll('.chapter-title').forEach(title => {
+                    title.addEventListener('click', function() {
+                        const content = this.nextElementSibling;
+                        const icon = this.querySelector('i');
+                        
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                            icon.classList.remove('fa-chevron-down');
+                            icon.classList.add('fa-chevron-up');
+                        } else {
+                            content.classList.add('hidden');
+                            icon.classList.remove('fa-chevron-up');
+                            icon.classList.add('fa-chevron-down');
+                        }
+                    });
+                });
+                
+                // 展开全部按钮功能
+                const expandAllButton = document.getElementById('expand-all');
+                if (expandAllButton) {
+                    expandAllButton.addEventListener('click', function() {
+                        const allContents = document.querySelectorAll('.chapter-content');
+                        const allIcons = document.querySelectorAll('.chapter-title i');
+                        
+                        // 检查是否所有概览都已展开
+                        const allExpanded = [...allContents].every(content => !content.classList.contains('hidden'));
+                        
+                        if (allExpanded) {
+                            // 如果全部已展开，则全部折叠
+                            allContents.forEach(content => content.classList.add('hidden'));
+                            allIcons.forEach(icon => {
+                                icon.classList.remove('fa-chevron-up');
+                                icon.classList.add('fa-chevron-down');
+                            });
+                            this.textContent = '展开全部';
+                        } else {
+                            // 否则全部展开
+                            allContents.forEach(content => content.classList.remove('hidden'));
+                            allIcons.forEach(icon => {
+                                icon.classList.remove('fa-chevron-down');
+                                icon.classList.add('fa-chevron-up');
+                            });
+                            this.textContent = '折叠全部';
+                        }
+                    });
+                }
+            }
+            
+            // 调用初始化函数
+            initChapterOverviews();
+        });
+    </script>
+</body>
+</html> 

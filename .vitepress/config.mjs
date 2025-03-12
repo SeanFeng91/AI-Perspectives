@@ -47,7 +47,6 @@ export default withMermaid(
               { text: '3. 还没收到微信的AI搜索入口么，先试试用Siri与AI对话', link: '/ApplicationExploration/05_AIconnectSiri.md' },
               { text: '4. 我是如何通过AI辅助我研究《实验室设计》课题的', link: '/ApplicationExploration/02_HowAIAsisResearch.md' },
               { text: '8. 集合Claude 3.7的Cursor打通了项目开发的任督二脉', link: '/ApplicationExploration/08_Cursor+Claude.md' },
-              { text: '9. books', link: '/ApplicationExploration/index.html' },
             ]
           }
         ],

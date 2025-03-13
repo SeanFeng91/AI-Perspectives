@@ -1340,6 +1340,476 @@
                 }
             }
             
+            // 添加多媒体内容功能
+            function addMultimediaContent() {
+                // 第一章多媒体内容
+                const chapter1 = document.getElementById('chapter1');
+                if (chapter1) {
+                    const chapter1Media = document.createElement('div');
+                    chapter1Media.className = 'my-8 space-y-6';
+                    chapter1Media.innerHTML = `
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-3xl mx-auto">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/21884094eb3ee17893edf5024a3900b0.jpg" 
+                                            alt="绳文时代陶器" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/2be65668337bae74d7a965e3604ce055.jpg" 
+                                            alt="绳文时代陶器" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/8880d14b7f0a1e517aa55f4dc4a8d3fd.jpg" 
+                                            alt="绳文时代陶器" 
+                                            class="w-full object-cover">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">绳文时代陶器</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">绳文时代的陶器以其独特的绳纹装饰和精细的工艺而闻名，这些陶器反映了当时人们的生活方式和审美观念。</p>
+                            </div>
+                        </div>
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-2xl mx-auto">
+                            <iframe src="https://player.bilibili.com/player.html?bvid=BV1MR4y1P7Ug&high_quality=1&danmaku=0&autoplay=0&preload=1" 
+                                    scrolling="no" 
+                                    border="0" 
+                                    frameborder="no" 
+                                    framespacing="0" 
+                                    allowfullscreen="true"
+                                    class="w-full"
+                                    style="aspect-ratio: 16/9;">
+                            </iframe>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">日本历史简介</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">这段视频一口气带您了解日本从古代到现代的所有历史时期。<br><span class="text-primary-500">注意：如果视频无法加载，请尝试<a href="https://www.bilibili.com/video/BV1MR4y1P7Ug" target="_blank" class="underline">直接访问bilibili</a>。</span></p>
+                            </div>
+                        </div>
+                    `;
+                    // 在第一段文字后插入多媒体内容
+                    const firstParagraph = chapter1.querySelector('p');
+                    if (firstParagraph) {
+                        firstParagraph.parentNode.insertBefore(chapter1Media, firstParagraph.nextSibling);
+                    } else {
+                        chapter1.appendChild(chapter1Media);
+                    }
+                }
+                
+                // 第二章多媒体内容
+                const chapter2 = document.getElementById('chapter2');
+                if (chapter2) {
+                    const chapter2Media = document.createElement('div');
+                    chapter2Media.className = 'my-8 space-y-6';
+                    chapter2Media.innerHTML = `
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-3xl mx-auto">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/692291bb0beb44edf0ff91fec0ae87b5.jpg" 
+                                            alt="源氏物语绘卷" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/c5c45c6bf0d054fd2216203097635432.jpg" 
+                                            alt="源氏物语绘卷" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/3f508e3f9a3ab607b01e654d05ca991d.jpg" 
+                                            alt="源氏物语绘卷" 
+                                            class="w-full object-cover">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">《源氏物语》绘卷</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">这幅绘卷描绘了平安时代的贵族生活，展现了当时的建筑风格、服饰和文化习俗。</p>
+                            </div>
+                        </div>
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-2xl mx-auto">
+                            <iframe src="https://player.bilibili.com/player.html?bvid=BV1oZ4y1m7Uc&high_quality=1&danmaku=0&autoplay=0&preload=1" 
+                                    scrolling="no" 
+                                    border="0" 
+                                    frameborder="no" 
+                                    framespacing="0" 
+                                    allowfullscreen="true"
+                                    class="w-full"
+                                    style="aspect-ratio: 16/9;">
+                            </iframe>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">平安时代文化</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">这段视频介绍了平安时代的文化特点和历史影响。<br><span class="text-primary-500">注意：如果视频无法加载，请尝试<a href="https://www.bilibili.com/video/BV1oZ4y1m7Uc" target="_blank" class="underline">直接访问bilibili</a>。</span></p>
+                            </div>
+                        </div>
+                    `;
+                    // 在第一段文字后插入多媒体内容
+                    const firstParagraph = chapter2.querySelector('p');
+                    if (firstParagraph) {
+                        firstParagraph.parentNode.insertBefore(chapter2Media, firstParagraph.nextSibling);
+                    } else {
+                        chapter2.appendChild(chapter2Media);
+                    }
+                }
+                
+                // 第三章多媒体内容
+                const chapter3 = document.getElementById('chapter3');
+                if (chapter3) {
+                    const chapter3Media = document.createElement('div');
+                    chapter3Media.className = 'my-8 space-y-6';
+                    chapter3Media.innerHTML = `
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-3xl mx-auto">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/0fc518bf631039d887645b0178c7b817.jpg" 
+                                            alt="镰仓武士" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/15775afd4b3c9838dd5095b746c6444a.jpg" 
+                                            alt="镰仓武士" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/9b1c80e830fb43641516275664ea39f2.jpg" 
+                                            alt="镰仓幕府" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/106c5d9dc6d371cd8040c8f20ee78bce.jpg" 
+                                            alt="武士道文化" 
+                                            class="w-full object-cover">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">镰仓武士与武士道</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">镰仓时代的武士代表了日本武士道精神的兴起，他们的价值观和行为准则深刻影响了日本文化。</p>
+                            </div>
+                        </div>
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-2xl mx-auto">
+                            <iframe src="https://player.bilibili.com/player.html?bvid=BV1GY411r7Eo&high_quality=1&danmaku=0&autoplay=0&preload=1" 
+                                    scrolling="no" 
+                                    border="0" 
+                                    frameborder="no" 
+                                    framespacing="0" 
+                                    allowfullscreen="true"
+                                    class="w-full"
+                                    style="aspect-ratio: 16/9;">
+                            </iframe>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">武士道精神</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">这段视频探讨了武士道精神的形成以及对日本文化的深远影响。<br><span class="text-primary-500">注意：如果视频无法加载，请尝试<a href="https://www.bilibili.com/video/BV1GY411r7Eo" target="_blank" class="underline">直接访问bilibili</a>。</span></p>
+                            </div>
+                        </div>
+                    `;
+                    // 在第一段文字后插入多媒体内容
+                    const firstParagraph = chapter3.querySelector('p');
+                    if (firstParagraph) {
+                        firstParagraph.parentNode.insertBefore(chapter3Media, firstParagraph.nextSibling);
+                    } else {
+                        chapter3.appendChild(chapter3Media);
+                    }
+                }
+                
+                // 第四章多媒体内容
+                const chapter4 = document.getElementById('chapter4');
+                if (chapter4) {
+                    const chapter4Media = document.createElement('div');
+                    chapter4Media.className = 'my-8 space-y-6';
+                    chapter4Media.innerHTML = `
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-3xl mx-auto">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/b2174a553c37b2fbe86ef1d8836d505d.jpg" 
+                                            alt="德川家康肖像" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/38ffd9b5e6350ba575e276c1e4a6ddfc.jpg" 
+                                            alt="江户时代浮世绘" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/0ff31ac91a863a3dd9eb4126acf0a6cf.jpg" 
+                                            alt="江户城" 
+                                            class="w-full object-cover">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">德川家康与江户时代</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">德川家康（1543-1616年）是日本江户时代的奠基人，建立了持续了260多年的德川幕府。</p>
+                            </div>
+                        </div>
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-2xl mx-auto">
+                            <iframe src="https://player.bilibili.com/player.html?aid=640527593&t=148&high_quality=1&danmaku=0&autoplay=0&preload=1" 
+                                    scrolling="no" 
+                                    border="0" 
+                                    frameborder="no" 
+                                    framespacing="0" 
+                                    allowfullscreen="true"
+                                    class="w-full"
+                                    style="aspect-ratio: 16/9;">
+                            </iframe>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">德川幕府的统治结构</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">这段视频详细介绍了德川幕府的统治结构，包括幕府将军、幕府官僚和幕府与各藩的关系。<br><span class="text-primary-500">注意：如果视频无法加载，请尝试<a href="https://www.bilibili.com/video/av640527593/?t=148" target="_blank" class="underline">直接访问bilibili</a>。</span></p>
+                            </div>
+                        </div>
+                        </div>
+                    `;
+                    // 在第一段文字后插入多媒体内容
+                    const firstParagraph = chapter4.querySelector('p');
+                    if (firstParagraph) {
+                        firstParagraph.parentNode.insertBefore(chapter4Media, firstParagraph.nextSibling);
+                    } else {
+                        chapter4.appendChild(chapter4Media);
+                    }
+                }
+                
+                // 第五章多媒体内容
+                const chapter5 = document.getElementById('chapter5');
+                if (chapter5) {
+                    const chapter5Media = document.createElement('div');
+                    chapter5Media.className = 'my-8 space-y-6';
+                    chapter5Media.innerHTML = `
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-3xl mx-auto">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/ce2d2e4c90489616521914b000cb9a2c.jpg" 
+                                            alt="明治天皇肖像" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/a63bee189c9fdb1a36d7f2318c01d26e_720w.webp" 
+                                            alt="明治天皇" 
+                                            class="w-full object-cover">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">明治天皇肖像</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">明治天皇（1852-1912）是日本明治维新的象征人物，在其统治下日本实现了从封建社会向现代国家的转变。</p>
+                            </div>
+                        </div>
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-2xl mx-auto">
+                            <iframe src="https://player.bilibili.com/player.html?bvid=BV1we4y1Q7fV&high_quality=1&danmaku=0&autoplay=0&preload=1" 
+                                scrolling="no" 
+                                border="0" 
+                                frameborder="no" 
+                                framespacing="0" 
+                                allowfullscreen="true"
+                                class="w-full"
+                                style="aspect-ratio: 16/9;">
+                            </iframe>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">明治维新与日本现代化</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">这段视频分析了明治维新的背景、过程和影响，解释了日本如何在短时间内完成现代化转型。<br><span class="text-primary-500">注意：如果视频无法加载，请尝试<a href="https://www.bilibili.com/video/BV1we4y1Q7fV" target="_blank" class="underline">直接访问bilibili</a>。</span></p>
+                            </div>
+                        </div>
+                    `;
+                    // 在第一段文字后插入多媒体内容
+                    const firstParagraph = chapter5.querySelector('p');
+                    if (firstParagraph) {
+                        firstParagraph.parentNode.insertBefore(chapter5Media, firstParagraph.nextSibling);
+                    } else {
+                        chapter5.appendChild(chapter5Media);
+                    }
+                }
+                
+                // 第六章多媒体内容
+                const chapter6 = document.getElementById('chapter6');
+                if (chapter6) {
+                    const chapter6Media = document.createElement('div');
+                    chapter6Media.className = 'my-8 space-y-6';
+                    chapter6Media.innerHTML = `
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-3xl mx-auto">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/59df6d45e015ec8ddd12aab4aaf431f2.jpg" 
+                                            alt="战后日本复兴" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/9fc3ab64146954409d5167f630713a7a.jpg" 
+                                            alt="昭和时代生活" 
+                                            class="w-full object-cover">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://oss.metaso.cn/metaso/thumbnail/3ed248ed1a4ed68e9b97ad994a34f8a0_720w.webp" 
+                                            alt="东京塔" 
+                                            class="w-full object-cover">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">战后日本复兴</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">二战后昭和时代的日本民众生活景象，展现了战后日本的社会变迁和经济腾飞。</p>
+                            </div>
+                        </div>
+                        <div class="media-container rounded-lg overflow-hidden shadow-lg max-w-2xl mx-auto">
+                            <iframe src="https://player.bilibili.com/player.html?aid=370182880&bvid=BV1HZ4y1h7nv&cid=424301152&page=1&high_quality=1&danmaku=0&autoplay=0&preload=1" 
+                                scrolling="no" 
+                                border="0" 
+                                frameborder="no" 
+                                framespacing="0" 
+                                allowfullscreen="true"
+                                class="w-full"
+                                style="aspect-ratio: 16/9;">
+                            </iframe>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-800">
+                                <h4 class="text-base font-medium mb-2">日本战后70年</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">这段视频回顾了日本自二战结束以来的70年历程，包括战后复兴、经济奇迹和社会变迁。<br><span class="text-primary-500">注意：如果视频无法加载，请尝试<a href="https://www.bilibili.com/video/BV1HZ4y1h7nv" target="_blank" class="underline">直接访问bilibili</a>。</span></p>
+                            </div>
+                        </div>
+                    `;
+                    // 在第一段文字后插入多媒体内容
+                    const firstParagraph = chapter6.querySelector('p');
+                    if (firstParagraph) {
+                        firstParagraph.parentNode.insertBefore(chapter6Media, firstParagraph.nextSibling);
+                    } else {
+                        chapter6.appendChild(chapter6Media);
+                    }
+                }
+                
+                // 添加Swiper轮播图所需的CSS和JS
+                const swiperCSS = document.createElement('link');
+                swiperCSS.rel = 'stylesheet';
+                swiperCSS.href = 'https://unpkg.com/swiper/swiper-bundle.min.css';
+                document.head.appendChild(swiperCSS);
+                
+                const swiperJS = document.createElement('script');
+                swiperJS.src = 'https://unpkg.com/swiper/swiper-bundle.min.js';
+                document.body.appendChild(swiperJS);
+                
+                // 等待Swiper加载完成后初始化
+                swiperJS.onload = function() {
+                    // 添加自定义样式
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .swiper-container {
+                            width: 100%;
+                            height: 400px;
+                            margin-bottom: 0;
+                            position: relative;
+                        }
+                        .swiper-slide {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        .swiper-slide img {
+                            width: 100%;
+                            height: 400px;
+                            object-fit: contain;
+                            background-color: #f8f9fa;
+                        }
+                        .swiper-button-next, .swiper-button-prev {
+                            color: #3b82f6;
+                            background-color: rgba(255, 255, 255, 0.7);
+                            padding: 20px;
+                            border-radius: 50%;
+                            width: 30px;
+                            height: 30px;
+                        }
+                        .swiper-button-next:after, .swiper-button-prev:after {
+                            font-size: 20px;
+                        }
+                        .swiper-pagination {
+                            position: absolute;
+                            bottom: 10px !important;
+                        }
+                        .swiper-pagination-bullet {
+                            background: #3b82f6;
+                            opacity: 0.7;
+                        }
+                        .swiper-pagination-bullet-active {
+                            opacity: 1;
+                        }
+                        .media-container {
+                            transition: transform 0.3s ease;
+                            margin-bottom: 30px;
+                        }
+                        .media-container:hover {
+                            transform: translateY(-5px);
+                        }
+                        .media-container .p-4 {
+                            margin-top: 0;
+                            border-top: none;
+                        }
+                        @media (max-width: 640px) {
+                            .media-container.grid {
+                                grid-template-columns: 1fr;
+                            }
+                            .swiper-container {
+                                height: 250px;
+                            }
+                            .swiper-slide img {
+                                height: 250px;
+                            }
+                            .swiper-button-next, .swiper-button-prev {
+                                padding: 15px;
+                                width: 25px;
+                                height: 25px;
+                            }
+                            .swiper-button-next:after, .swiper-button-prev:after {
+                                font-size: 16px;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                    // 初始化所有Swiper实例
+                    const swipers = document.querySelectorAll('.swiper-container');
+                    swipers.forEach((swiperEl, index) => {
+                        new Swiper(swiperEl, {
+                            loop: true,
+                            pagination: {
+                                el: swiperEl.querySelector('.swiper-pagination'),
+                                clickable: true
+                            },
+                            navigation: {
+                                nextEl: swiperEl.querySelector('.swiper-button-next'),
+                                prevEl: swiperEl.querySelector('.swiper-button-prev')
+                            },
+                            autoplay: {
+                                delay: 5000,
+                                disableOnInteraction: false
+                            },
+                            spaceBetween: 30
+                        });
+                    });
+                };
+            }
+            
+            // 调用多媒体内容函数
+            addMultimediaContent();
+            
             // 调用初始化函数
             initChapterOverviews();
         });

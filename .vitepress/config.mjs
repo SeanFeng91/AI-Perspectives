@@ -48,6 +48,7 @@ export default withMermaid(
               { text: '4. 我是如何通过AI辅助我研究《实验室设计》课题的', link: '/ApplicationExploration/02_HowAIAsisResearch.md' },
               { text: '8. 集合Claude 3.7的Cursor打通了项目开发的任督二脉', link: '/ApplicationExploration/08_Cursor+Claude.md' },
               { text: '10. 我用Cursor读了一本书，做了一个图文并茂的总结', link: '/ApplicationExploration/10_CursorReading.md' },
+              { text: '11. 我用Cursor可视化了《枪炮、病毒与钢铁》，让历史在眼前活起来！', link: '/ApplicationExploration/11_GunsVirusSteel.md' },
             ]
           }
         ],

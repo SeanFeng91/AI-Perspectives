@@ -93,7 +93,10 @@ AI 负责梳理信息、生成结构化的数据，我则负责整合、调试�
 
 经历了N次Cursor的免费Agent额度用尽，终于迎来了第一版地图。
 <div align="center">
-  <img src="/attachments/gif/map.gif" alt="操作录屏">
+  <video controls autoplay loop width="100%">
+    <source src="/attachments/webm/世界地图录屏.webm" type="video/webm">
+    您的浏览器不支持视频标签。
+  </video>
 </div>
 
 

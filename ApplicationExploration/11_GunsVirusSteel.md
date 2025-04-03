@@ -93,7 +93,7 @@ AI 负责梳理信息、生成结构化的数据，我则负责整合、调试�
 
 经历了N次Cursor的免费Agent额度用尽，终于迎来了第一版地图。
 <div align="center">
-  <img src="../attachments/gif/map.gif" alt="操作录屏">
+  <img src="/attachments/gif/map.gif" alt="操作录屏">
 </div>
 
 
